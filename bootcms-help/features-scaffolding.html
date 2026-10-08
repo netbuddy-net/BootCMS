@@ -1,0 +1,235 @@
+<!doctype html>
+<!--
+ * WordPress classic theme
+ * bootcms-help/theme-features.html 
+ * @link https://github/...
+ * @package bootcms
+ * @since bootcms 2.0
+ *
+ * ========================================================
+   Help - Features & Scaffolding doc
+   ========================================================= */
+-->
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>BootCMS | Theme & Appearance</title>
+ <meta name="description" content=" ">
+ <link rel="stylesheet" href="./help-styles.css"> 
+</head>
+<body itemscope itemtype="https://schema.org/WebPage">
+ <meta itemprop="name" content=" ">
+ <meta itemprop="description" content=" ">
+ <meta itemprop="keywords" content=" "> 
+ <meta itemprop="inLanguage" content=" ">
+ <meta itemprop="author" content=" "> 
+ <meta itemprop="datePublished" content=" ">
+ <meta itemprop="dateModified" content=" ">
+ <link itemprop="isPartOf" href=" "> 
+<header itemprop="hasPart" itemscope itemtype="https://schema.org/WPHeader">
+<h1>BootCMS Classic WP Theme v2.0<br>
+<small>Help Documents</small></h1>
+</header>
+
+<main id="main" itemprop="mainContentOfPage" itemscope itemtype="https://schema.org/WebPageElement">
+<!-- Help file starts here -->
+<h2>Features & Scaffolding</h2>
+<hr>
+
+<section>
+<h3>Introduction</h3>
+<p>
+There is often an antagonism between simplicity and advanced configuration. Themes can become restrictive when trying to support too many options, but this is an area where BootCMS aims to provide a different approach. BootCMS provides easy-to-use tools for developers of all levels, with the tools for styling and scaffolding placed in the <strong>Customizer</strong>.  
+
+<details>
+<summary>Read more ...</summary>
+<p>
+After activating BootCMS, a developer should configure some basic settings in <strong>WordPress Settings</strong>, including what the website will display as its first page.
+
+<p>
+Whatever the homepage is - a list of posts or a static page - it is advisable to enter some <em>Lorem ipsum</em> temporarily and create a couple of additional pages if needed. This provides some initial content while creating the <strong>Primary Menu</strong>, <strong>Header</strong>, <strong>Footer</strong> and applying <strong>styles</strong> to the foundational elements.
+
+<p>
+After creating a couple of posts and/or pages, the remaining configuration can be carried out from the Customizer <strong>(Appearance > Customise)</strong>, which also provides a live <strong>Preview</strong> of the changes.
+</details>
+<section>
+
+<section>
+<h3>Understanding BootCMS</h3>
+
+<dl>
+<dt>1. Theme as a foundation
+<dd>BootCMS provides the basic scaffolding for a webpage: a <strong>Header</strong> at the top, a <strong>Navigation</strong> bar, the <strong>Main</strong> section where the page content is displayed, a <strong>Footer</strong> at the bottom and a <strong>Sidebar</strong> at the right of the page. On the first page, it also provides a place above the Main section for the <strong>Hero</strong> unit. In addition, BootCMS provides several more sidebars, giving users greater flexibility when configuring the scaffolding.
+<br>&nbsp;<br>
+<details>
+<summary>Read more ...</summary>
+<br>
+<dt>2. Classic theme with Block Editor support
+<dd>BootCMS is a classic theme, which means it uses the familiar WordPress interface that has been used for many years. However, the modern <strong>Block Editor</strong> is also available for editing pages. 
+<dt>3. Customizer as the control centre
+<dd>Configuration of the scaffolding, styles and widgets takes place in the <strong>Customizer</strong>, with changes previewed live. For beginners, several controls are available, including tick boxes, radio options and other simple settings. More advanced users can customise the site further by editing <strong>widgets</strong> and placing them in the appropriate areas, allowing more complex setups.
+<dt>4. Frameworks & Libraries
+<dd>BootCMS provides the option to select from several <strong>CSS</strong> and <strong>JavaScript frameworks</strong> or <strong>libraries</strong> simply by using a control in customizer. The necessary framework files are automatically linked from their respective CDNs.
+<dt>5. Content and presentation are separate
+<dd>Following the standards and guidelines of the <strong>W3C</strong>, BootCMS keeps content and presentation separate. The structure, behaviour and styling are implemented through the BootCMS tools and the Customizer, while content is added through the familiar WordPress <strong>Pages</strong> and <strong>Posts</strong>.
+</dl>
+</details>
+</section>
+
+<section>
+<h3>Schema Microdata</h3>
+<p>
+BootCMS theme includes in its HTML, <strong>Microdata</strong> vocabulary conforming to the <strong>Schema.org</strong> organisation. Schema.org is supported by most major search engines on the Internet, including Google, Bing, Yahoo and Yandex. Microdata is used by online bots to understand the webpage content more easily and help developers get the maximum benefit from their efforts.
+<details>
+<summary>Read more ...</summary>
+<p>
+BootCMS uses the Schema.org Microdata to "mark" several parts of a webpage, such as the Header, the Footer, etc., and to add a small amount of information about the creation of the webpage, such as the <strong>Author</strong> and the <strong>Date Published</strong>. In this way, it does not interfere with other Schemas which the developer may need to add. In fact, BootCMS's Microdata helps any added schema.
+<p>
+There are two parts of Microdata used by BootCMS in the theme:
+<dl>
+<dt>WebPage Structure (Hardcoded)
+<dd><ul>
+		<li><code>&lt;body itemscope itemtype="https://schema.org/WebPage"&gt;</code>
+		<li><code>&lt;header itemprop="hasPart" itemscope itemtype="https://schema.org/WPHeader"&gt;</code>
+		<li><code>&lt;nav aria-label="main navigation" itemprop="hasPart" itemscope itemtype="https://www.schema.org/SiteNavigationElement"&gt;</code>
+		<li><code>&lt;main itemprop="mainContentOfPage" itemscope itemtype="https://schema.org/WebPageElement"&gt;</code>
+		<li><code>&lt;footer itemprop="hasPart" itemscope itemtype="https://schema.org/WPFooter"&gt;</code>	
+	</ul>
+</dl>
+<dl>
+<dt>Page Information (Optional)
+<dd>In the <strong>Pages</strong> editing section of WordPress, under each page, BootCMS adds entries in the <strong>Custom Fields</strong> which can be used to provide information regarding the creation of the webpage. This is optional, and if the "Value" field has not been filled in, the entry is not added to the HTML.  
+  <ul>
+	<li><code>&lt;meta itemprop="name" content=" "&gt;</code><br>
+	The <u>title</u> of the webpage. If no one is provided, the theme uses the Title of the webpage. 
+	<li><code>&lt;meta itemprop="description" content=" "&gt;</code><br>
+	A short <u>description</u> of the webpage, recommended to be up to around 160 characters. 
+	<li><code>&lt;meta itemprop="keywords" content=" "&gt;</code><br>
+	It is recommended to use the <u>Focus Keyword</u> (the main keyword) of the page, together with two or three <u>Related Keywords</u>.
+	<li><code>&lt;meta itemprop="inLanguage" content=" "&gt;</code><br>
+	The <u>language</u> of the page such as "en-GB".
+	<li><code>&lt;meta itemprop="author" content=" "&gt;</code><br>
+	The name of the <u>author</u> of the webpage. 
+	<li><code>&lt;meta itemprop="datePublished" content=" "&gt;</code><br>
+	<u>Date published</u> is added automatically by WordPress.
+	<li><code>&lt;meta itemprop="dateModified" content=" "&gt;</code><br>
+	<u>Date modified</u> is added automatically by WordPress.
+	<li><code>&lt;link itemprop="isPartOf" href=" "&gt;</code><br>
+	This is added automatically by WordPress, it is a link pointing to the <u>WebSite</u>. 
+  </ul>
+</dl>
+</details>
+</section>
+ 
+<section>
+<h3>Customizer</h3>
+
+<p>
+In WordPress's Customizer, BootCMS places all of its configuration tools.
+
+<details>
+<summary>Read more ...</summary>
+<dl>
+<dt>Site identity
+<dd>Settings related to the site's identity, such as the Site Title and Logo image.
+<dt>Simple styles
+<dd>BootCMS own section for settings relating to styling.
+<dt>Advanced Settings
+<dd>BootCMS own section for settings relating to the site's functionality.
+<dt>Posts settings
+<dd>BootCMS own section  for settings related to Posts.
+<dt>Menus
+<dd>The Menus and the tools used to build them are available here.
+<dt>Widgets
+<dd>The sidebars created by BootCMS are displayed here, allowing users to choose and place widgets in them.
+<dt>Homepage settings
+<dd>A few settings related to site's homepage.
+<dt>Additional CSS
+<dd>WordPress provides an easy way to add custom CSS styles.
+<dt>Help
+<dd>BootCMS's section containing the Help documents.
+</dl>
+</details>
+</section>
+
+<section>
+<h3>Scaffolding</h3>
+<p>
+A complete scaffolding includes several sidebars to provide maximum flexibility for developers. The developer has full control over the webpage layout. Widgets can also be used to edit the main sections of a page as a whole, such as the Header, Nav bar, Right Sidebar and Footer. All editing takes place in the Customizer, including HTML, CSS and JS. Remember to use the <strong>BootCMS Large HTML Editor</strong> widget for a more comfortable editing experience.
+
+<details>
+<summary>Read more ...</summary>
+<div class="grid-2x4">
+  <div>
+	<p>
+	In the diagram below, only the content in the "Main" section of the page is edited in Pages or Posts, all the other parts are edited in the Customizer. The BootCMS layout can be further customized, offering several layout options directly from the WordPress Customizer.
+  </div>
+  <div>
+	<p>
+	The diagram below shows how the layout will appear when a developer uses a framework such as Bootstrap or Foundation. There is no predefined grid or other layout structure, providing complete freedom to the developer to implement any grid required.
+  </div>
+  <div>
+  <strong>BootCMS Layout</strong>
+<svg width="400" height="566" style="width:100%;height:auto;max-width:425px;min-width:212px;" version="1.1" viewBox="0 0 210 297" xmlns="http://www.w3.org/2000/svg"><rect x="7.14" y="8.05" width="195" height="79.6" style="fill:#c3eff9;paint-order:markers stroke fill"/><rect x="6.88" y="9.15" width="195" height="19.7" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#ff8f00"/><rect x="7.14" y="91.1" width="193" height="19.7" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#ff8f00"/><text x="35.091198" y="102.60482" style="fill:#c3eff9;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:1.5;stroke:#c3eff9;word-spacing:0px" xml:space="preserve"><tspan x="35.091198" y="102.60482" style="fill:#b25f00;font-size:8.4px;stroke-width:1.5">Primary Navigation Location</tspan></text><rect x="6.63" y="127" width="196" height="99" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:1.5;stroke:#c3eff9"/><rect x="8.02" y="116" width="193" height="43.8" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#ff8f00"/><rect x="149" y="165" width="52.2" height="59.6" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#ff8f00"/><text x="102.03484" y="134.38727" style="fill:#b25f00;font-family:Arial;font-size:7.76px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-width:.5;stroke:#2e6099;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="102.03484" y="134.38727" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">Homepage Hero Unit</tspan><tspan x="102.09438" y="144.31445" style="fill:#b25f00;font-size:7px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">(only in homepage)</tspan></text><text x="76.802322" y="198.52563" style="fill:#002f85;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-dasharray:2, 1;stroke:#2e9937;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="76.861855" y="198.52563" style="fill:#b26000;font-size:8.4px;stroke:none">Page Main Content</tspan></text><rect x="5.39" y="228" width="197" height="64.5" style="fill:#c3eff9;paint-order:markers stroke fill"/><rect x="5.78" y="280" width="196" height="10.9" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ff8900"/><text x="99.223961" y="287.85367" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-dasharray:2, 1;stroke:#2e9937;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="99.283493" y="287.85367" style="fill:#b25f00;font-size:8.4px;stroke:none">P<tspan style="font-size:7.7px">age Baseline - Copyright Info</tspan></tspan></text><rect x="60.8" y="230" width="85" height="45.5" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:2;stroke:#ff8900"/><text x="102.59582" y="251.14075" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-width:.5;stroke:#2e6099;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="102.59582" y="251.14075" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">Footer</tspan><tspan x="102.65535" y="261.64075" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">Main</tspan></text><rect x="6.15" y="229" width="50.7" height="45.9" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:2;stroke:#ff8900"/><text x="33.004131" y="250.52167" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-width:.5;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="33.004131" y="250.52167" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;text-align:center;text-anchor:middle">Footer</tspan><tspan x="33.063663" y="261.02167" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;text-align:center;text-anchor:middle">Left</tspan></text><rect x="149" y="230" width="52.4" height="45.5" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:2;stroke:#ff8900"/><text x="174.63496" y="252.63263" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-width:.5;stroke:#2e6099;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="174.63496" y="252.63263" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">Footer</tspan><tspan x="174.69449" y="263.13263" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">Sidebar</tspan></text><rect x="149" y="32.8" width="52.9" height="54" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ff8900"/><text x="174.9606" y="51.861851" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-width:.5;stroke:#2e6099;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="174.9606" y="51.861851" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">Header</tspan><tspan x="174.9606" y="62.361851" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">Right</tspan><tspan x="175.02013" y="72.861855" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">Sidebar</tspan></text><rect x="6.57" y="32.3" width="52.3" height="54.6" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ff8900"/><rect x="62.6" y="32.8" width="81" height="54.1" rx="0" ry="0" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ff8900"/><rect x="5.98" y="164" width="138" height="62" rx="0" ry="0" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ff8900"/><text x="30.716164" y="45.999599" style="fill:#b26000;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.173px;paint-order:markers stroke fill;stroke-dasharray:2, 1;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="30.716164" y="45.999599" style="fill:#b26000;font-size:8.4px">Square</tspan><tspan x="30.716164" y="56.499599" style="fill:#b26000;font-size:8.4px">Image</tspan><tspan x="30.716164" y="66.999603" style="fill:#b26000;font-size:8.4px">or</tspan><tspan x="30.802496" y="77.499603" style="fill:#b26000;font-size:8.4px">Logo</tspan></text><text x="174.68417" y="192.37213" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-width:.5;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="174.68417" y="192.37213" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;text-align:center;text-anchor:middle">Right</tspan><tspan x="174.7437" y="202.87213" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;text-align:center;text-anchor:middle">Sidebar</tspan></text><text x="101.50005" y="21.875011" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:3.15;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="101.61818" y="21.875011" style="font-size:8.4px;stroke-width:3.15">Alternative Navbar Location</tspan></text><path d="m77 94.5c-21.9-12.9-25.2-27.1-26.3-33.5-2.76-17.3 8.31-26.1 8.31-26.1l-9.19-3.51 21.4-5.07 4.38 15.2-8.75-2.73s-5.65 6.86-1.75 20.3c2.19 7.56 7.32 11.7 13.1 16 12.4 9.2 42 19.9 42 19.9l-30.6-5.28z" style="fill-opacity:.3;fill:#b20000;paint-order:markers stroke fill;stroke-width:1.05;stroke:#b30000"/><text x="73.571297" y="55.562523" style="fill:#b25f00;font-family:Arial;font-size:7.7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:1.58;word-spacing:0px" xml:space="preserve"><tspan x="73.571297" y="55.562523" style="font-family:Arial;font-size:7.7px;font-style:italic;font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-weight:bold;letter-spacing:.236px;stroke-width:1.58">&lt;h1&gt;Site Title</tspan><tspan x="73.571297" y="65.219704" style="font-family:Arial;font-size:7.7px;font-style:italic;font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-weight:bold;letter-spacing:.236px;stroke-width:1.58">Tagline&lt;/h1&gt;</tspan></text></svg>  
+  </div>
+  <div>
+  <strong>Framework Starting Layout</strong><br>
+<svg width="400" height="566" style="width:100%;height:auto;max-width:425px;min-width:212px;" version="1.1" viewBox="0 0 210 297" xmlns="http://www.w3.org/2000/svg"><rect x="7.14" y="8.05" width="195" height="79.6" style="fill:#c3eff9;paint-order:markers stroke fill"/><rect x="6.88" y="9.15" width="195" height="19.7" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#ff8f00"/><rect x="7.14" y="91.1" width="194" height="19.7" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#ff8f00"/><text x="35.091198" y="102.60482" style="fill:#c3eff9;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:1.5;stroke:#c3eff9;word-spacing:0px" xml:space="preserve"><tspan x="35.091198" y="102.60482" style="fill:#b25f00;font-size:8.4px;stroke-width:1.5">Primary Navigation Location</tspan></text><rect x="6.63" y="116" width="196" height="90" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:1.5;stroke:#c3eff9"/><rect x="7.77" y="186" width="193" height="19.3" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#ff8f00"/><text x="101.44634" y="150.65936" style="fill:#002f85;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-dasharray:2, 1;stroke:#2e9937;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="101.50587" y="150.65936" style="fill:#b26000;font-size:8.4px;stroke:none">Page Main Content</tspan></text><rect x="5.39" y="211" width="197" height="81.6" style="fill:#c3eff9;paint-order:markers stroke fill"/><rect x="5.78" y="280" width="196" height="10.9" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ff8900"/><text x="99.223961" y="287.85367" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-dasharray:2, 1;stroke:#2e9937;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="99.283493" y="287.85367" style="fill:#b25f00;font-size:8.4px;stroke:none">P<tspan style="font-size:7.7px">age Baseline - Copyright Info</tspan></tspan></text><rect x="6.77" y="236" width="195" height="20.9" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:2;stroke:#ff8900"/><text x="104.01759" y="248.77113" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-width:.5;stroke:#2e6099;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="104.01759" y="248.77113" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">Footer Main</tspan></text><rect x="6.62" y="211" width="195" height="21.3" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:2;stroke:#ff8900"/><text x="103.61872" y="223.50801" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-width:.5;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="103.61872" y="223.50801" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;text-align:center;text-anchor:middle">Footer Left</tspan></text><rect x="6.35" y="260" width="195" height="17.1" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:2;stroke:#ff8900"/><text x="101.17683" y="270.64172" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-width:.5;stroke:#2e6099;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="101.17683" y="270.64172" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">Footer Sidebar</tspan></text><rect x="6.82" y="67.4" width="196" height="20.4" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ff8900"/><text x="107.18954" y="79.349411" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-width:.5;stroke:#2e6099;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="107.18954" y="79.349411" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">Header Right Sidebar</tspan></text><rect x="6.2" y="32.8" width="196" height="31.4" rx="0" ry="0" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ff8900"/><rect x="5.98" y="116" width="196" height="65.8" rx="0" ry="0" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ff8900"/><text x="105.01743" y="198.53314" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-width:.5;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="105.01743" y="198.53314" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;text-align:center;text-anchor:middle">Right Sidebar</tspan></text><text x="101.50005" y="21.875011" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:3.15;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="101.61818" y="21.875011" style="font-size:8.4px;stroke-width:3.15">Alternative Navbar Location</tspan></text><path d="m77 94.5c-21.9-12.9-25.2-27.1-26.3-33.5-2.76-17.3 8.31-26.1 8.31-26.1l-9.19-3.51 21.4-5.07 4.38 15.2-8.75-2.73s-5.65 6.86-1.75 20.3c2.19 7.56 7.32 11.7 13.1 16 12.4 9.2 42 19.9 42 19.9l-30.6-5.28z" style="fill-opacity:.3;fill:#b20000;paint-order:markers stroke fill;stroke-width:1.05;stroke:#b30000"/><text x="54.614357" y="50.823288" style="fill:#b25f00;font-family:Arial;font-size:7.7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:1.58;word-spacing:0px" xml:space="preserve"><tspan x="54.614357" y="50.823288" style="font-family:Arial;font-size:7.7px;font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-weight:bold;letter-spacing:.236px;stroke-width:1.58">&lt;h1&gt;Site TitleTagline&lt;/h1&gt;</tspan></text></svg>   
+  </div>
+  <div>
+	<p>
+	Below is an alternative layout in which each section is positioned below the previous one, creating a one-column layout. This is one of the many grid layouts that the BootCMS theme provides with just a few clicks in the Customizer.
+  </div>
+  <div id="theme-classes">
+	<p>
+	The diagram below displays the names of elements, the names of CSS classes, and the methods used to apply CSS styles. Developers can create styles and apply the class names through the Customizer or define their own styles in the "<u>Additional CSS</u>" section of the Customizer, using the provided class names.</span>
+  </div>
+  <div>
+  <strong>Alternative (One Column) Layout</strong><br>
+<svg width="400" height="566" style="width:100%;height:auto;max-width:425px;min-width:212px;" version="1.1" viewBox="0 0 210 297" xmlns="http://www.w3.org/2000/svg"><rect x="7.14" y="8.05" width="195" height="79.6" style="fill:#c3eff9;paint-order:markers stroke fill"/><rect x="6.88" y="9.15" width="195" height="19.7" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#ff8f00"/><rect x="7.14" y="91.1" width="193" height="19.7" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#ff8f00"/><text x="35.091198" y="102.60482" style="fill:#c3eff9;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:1.5;stroke:#c3eff9;word-spacing:0px" xml:space="preserve"><tspan x="35.091198" y="102.60482" style="fill:#b25f00;font-size:8.4px;stroke-width:1.5">Primary Navigation Location</tspan></text><rect x="6.63" y="116" width="196" height="110" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:1.5;stroke:#c3eff9"/><text x="103.05234" y="168.33812" style="fill:#002f85;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-dasharray:2, 1;stroke:#2e9937;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="103.11187" y="168.33812" style="fill:#b26000;font-size:8.4px;stroke:none">Page Main Content</tspan></text><rect x="5.39" y="228" width="197" height="64.5" style="fill:#c3eff9;paint-order:markers stroke fill"/><rect x="5.78" y="280" width="196" height="10.9" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ff8900"/><text x="99.223961" y="287.85367" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-dasharray:2, 1;stroke:#2e9937;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="99.283493" y="287.85367" style="fill:#b25f00;font-size:8.4px;stroke:none">P<tspan style="font-size:7.7px">age Baseline - Copyright Info</tspan></tspan></text><rect x="6.07" y="230" width="195" height="45.5" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:2;stroke:#ff8900"/><text x="103.90832" y="254.20325" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.119px;paint-order:markers stroke fill;stroke-width:.5;stroke:#2e6099;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="103.96785" y="254.20325" style="fill:#b25f00;font-size:8.4px;stroke-width:.5;stroke:none;text-align:center;text-anchor:middle">Custom Footer Sidebar</tspan></text><rect x="6.56" y="32.8" width="196" height="54.1" rx="0" ry="0" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ff8900"/><rect x="5.98" y="116" width="195" height="110" rx="0" ry="0" style="fill:none;paint-order:markers stroke fill;stroke-width:1.57;stroke:#ff8900"/><text x="101.50005" y="21.875011" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:3.15;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="101.61818" y="21.875011" style="font-size:8.4px;stroke-width:3.15">Alternative Navbar Location</tspan></text><path d="m77 94.5c-21.9-12.9-25.2-27.1-26.3-33.5-2.76-17.3 8.31-26.1 8.31-26.1l-9.19-3.51 21.4-5.07 4.38 15.2-8.75-2.73s-5.65 6.86-1.75 20.3c2.19 7.56 7.32 11.7 13.1 16 12.4 9.2 42 19.9 42 19.9l-30.6-5.28z" style="fill-opacity:.3;fill:#b20000;paint-order:markers stroke fill;stroke-width:1.05;stroke:#b30000"/><text x="68.758797" y="59.062523" style="fill:#b25f00;font-family:Arial;font-size:8.4px;font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:1.58;word-spacing:0px" xml:space="preserve"><tspan x="50" y="62" style="font-family:Arial;font-size:8.4px;font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-weight:900;letter-spacing:.236px;stroke-width:1.58">Custom Header Sidebar</tspan></text><text transform="scale(.525)" style="fill:#b25f00;font-family:Arial;font-size:16px;font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-weight:900;letter-spacing:.45px;paint-order:markers stroke fill;shape-inside:url(#rect33);text-orientation:auto;white-space:pre;word-spacing:0px" xml:space="preserve"/></svg>
+  </div>  
+  <div>
+  <strong>Element & Class Names</strong><br>
+<svg width="400" height="566" style="width:100%;height:auto;max-width:425px;min-width:212px;" version="1.1" viewBox="0 0 210 297" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a" style="overflow:visible" markerHeight="0.5" markerWidth="0.5" orient="auto-start-reverse" preserveAspectRatio="xMidYMid" viewBox="0 0 1 1"><path transform="scale(.5)" d="m5.77 0-8.65 5v-10z" style="fill-rule:evenodd;fill:context-stroke;stroke-width:1pt;stroke:context-stroke"/></marker><marker id="c" style="overflow:visible" markerHeight="0.5" markerWidth="0.5" orient="auto-start-reverse" preserveAspectRatio="xMidYMid" viewBox="0 0 1 1"><path transform="scale(.5)" d="m5.77 0-8.65 5v-10z" style="fill-rule:evenodd;fill:context-stroke;stroke-width:1pt;stroke:context-stroke"/></marker><marker id="b" style="overflow:visible" markerHeight="0.5" markerWidth="0.5" orient="auto-start-reverse" preserveAspectRatio="xMidYMid" viewBox="0 0 1 1"><path transform="scale(.5)" d="m5.77 0-8.65 5v-10z" style="fill-rule:evenodd;fill:context-stroke;stroke-width:1pt;stroke:context-stroke"/></marker></defs><rect x="40.5" y="66.1" width="137" height="13.1" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#ff8f00"/><rect x="6.63" y="6.62" width="196" height="285" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#666"/><rect x="10.8" y="17.9" width="188" height="270" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#666"/><text x="78.32621" y="254.2088" style="fill:#000000;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ffffff;word-spacing:0px" xml:space="preserve"><tspan x="78.32621" y="254.2088" style="fill:#006600;stroke-width:1.58;stroke:#ffffff">.footer-main</tspan><tspan x="78.32621" y="262.9588" style="fill:#000000;stroke-width:1.58;stroke:#ffffff"/></text><text x="75.001205" y="277.66086" style="fill:#000000;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ffffff;word-spacing:0px" xml:space="preserve"><tspan x="75.001205" y="277.66086" style="fill:#006600;stroke-width:1.58;stroke:#ffffff">.footer-baseline</tspan><tspan x="75.001205" y="286.41086" style="fill:#000000;stroke-width:1.58;stroke:#ffffff"/></text><text x="29.767105" y="228.57129" style="fill:#666666;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:3.15;word-spacing:0px" xml:space="preserve"><tspan x="29.767105" y="228.57129" style="fill:#666666;font-size:7px;stroke-width:3.15">footer - classes applied in Customizer </tspan></text><rect x="14.6" y="219" width="180" height="65.6" rx="0" ry="0" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#666"/><text x="81.133835" y="171.69627" style="fill:#666666;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:3.15;text-align:center;text-anchor:middle;word-spacing:0px" xml:space="preserve"><tspan x="81.133835" y="171.69627" style="fill:#666666;font-size:7px;stroke-width:3.15;text-align:center;text-anchor:middle">main</tspan><tspan x="82.537323" y="180.44627" style="fill:#666666;font-size:7px;stroke-width:3.15;text-align:center;text-anchor:middle">classes applied in Customizer </tspan></text><path d="m170 61.7-3.12 7.97h0.438" style="fill:#060;marker-start:url(#a);paint-order:markers stroke fill;stroke-width:1.58;stroke:#060"/><rect x="15.5" y="114" width="179" height="41.1" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#090"/><rect x="14.2" y="30.4" width="181" height="57.9" style="fill:none;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:1.58;stroke:#666"/><rect x="153" y="160" width="40.8" height="54.7" style="fill:#c3eff9;paint-order:markers stroke fill;stroke-linecap:round;stroke-width:3.15;stroke:#090"/><path d="m173 175-3.12 7.97h0.438" style="fill:#060;marker-start:url(#c);paint-order:markers stroke fill;stroke-width:1.58;stroke:#060"/><rect x="19.5" y="270" width="171" height="10" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#090"/><rect x="63.8" y="234" width="81.5" height="32.3" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:2;stroke:#090"/><rect x="20.6" y="234" width="39.7" height="33.2" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:2;stroke:#090"/><path d="m40.9 246-1.54 8.42 0.429-0.0837" style="fill:#060;marker-start:url(#b);paint-order:markers stroke fill;stroke-width:1.58;stroke:#060"/><rect x="149" y="235" width="41.4" height="31.9" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:2;stroke:#090"/><rect x="150" y="43.3" width="40.6" height="40.1" style="fill-opacity:0;paint-order:markers stroke fill;stroke-width:1.58;stroke:#090"/><rect x="17.6" y="42.8" width="40.4" height="41.5" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#090"/><rect x="62.6" y="42.8" width="83.6" height="41.4" rx="0" ry="0" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#090"/><rect x="14.7" y="160" width="133" height="56.4" rx="0" ry="0" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#666"/><rect x="14" y="91.8" width="181" height="17.9" rx="0" ry="0" style="fill:none;paint-order:markers stroke fill;stroke-width:1.58;stroke:#666"/><text transform="scale(.985 1.01)" x="25.067991" y="101.68639" style="fill:#666666;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.233px;paint-order:markers stroke fill;stroke-width:3.15;word-spacing:0px" xml:space="preserve"><tspan x="25.067991" y="101.68639" style="fill:#666666;font-size:7px;stroke-width:3.15">nav bar - classes applied in Customizer </tspan></text><text x="29.312513" y="13.562507" style="fill:#666666;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:3.15;word-spacing:0px" xml:space="preserve"><tspan x="29.312513" y="13.562507" style="fill:#666666;font-size:7px;stroke-width:3.15">body - classes applied in Customizer </tspan></text><text x="12.87276" y="25.4837" style="fill:#666666;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:3.15;word-spacing:0px" xml:space="preserve"><tspan x="12.87276" y="25.4837" style="fill:#666666;font-size:7px;stroke-width:3.15">top container - classes applied in Customizer </tspan></text><text x="24.732435" y="38.171207" style="fill:#666666;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:3.15;word-spacing:0px" xml:space="preserve"><tspan x="24.732435" y="38.171207" style="fill:#666666;font-size:7px;stroke-width:3.15">header - classes applied in Customizer </tspan></text><text x="19.25001" y="51.625023" style="fill:#000000;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ffffff;word-spacing:0px" xml:space="preserve"><tspan x="19.25001" y="51.625023" style="fill:#006600;stroke-width:1.58;stroke:#ffffff">.header-image</tspan><tspan x="19.25001" y="60.375011" style="fill:#000000;stroke-width:1.58;stroke:#ffffff"/></text><text x="72.551208" y="64.860764" style="fill:#000000;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ffffff;word-spacing:0px" xml:space="preserve"><tspan x="72.551208" y="64.860764" style="fill:#006600;stroke-width:1.58;stroke:#ffffff">.header-content</tspan><tspan x="72.551208" y="73.610748" style="fill:#000000;stroke-width:1.58;stroke:#ffffff"/></text><text x="80.076218" y="136.5233" style="fill:#000000;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ffffff;word-spacing:0px" xml:space="preserve"><tspan x="80.076218" y="136.5233" style="fill:#006600;stroke-width:1.58;stroke:#ffffff">.hero-unit</tspan><tspan x="80.076218" y="145.27328" style="fill:#000000;stroke-width:1.58;stroke:#ffffff"/></text><text x="125.31373" y="78.510765" style="fill:#000000;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ffffff;word-spacing:0px" xml:space="preserve"><tspan x="125.31373" y="78.510765" style="fill:#006600;stroke-width:1.58;stroke:#ffffff">.header-sidebar</tspan></text><path d="m43.7 53.9-6.5 11.1" style="fill:#060;marker-end:url(#a);paint-order:markers stroke fill;stroke-width:1.58;stroke:#060"/><text x="189.88028" y="192.78581" style="fill:#000000;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ffffff;text-align:end;text-anchor:end;word-spacing:0px" xml:space="preserve"><tspan x="189.88028" y="192.78581" style="fill:#006600;stroke-width:1.58;stroke:#ffffff;text-align:end;text-anchor:end">.home-right-sidebar</tspan><tspan x="189.88028" y="201.5358" style="fill:#006600;stroke-width:1.58;stroke:#ffffff;text-align:end;text-anchor:end">or</tspan><tspan x="189.88028" y="210.28578" style="fill:#006600;stroke-width:1.58;stroke:#ffffff;text-align:end;text-anchor:end">.pages-right-sidebar</tspan><tspan x="189.88028" y="219.03578" style="fill:#000000;stroke-width:1.58;stroke:#ffffff;text-align:end;text-anchor:end"/></text><text x="23.551184" y="262.96085" style="fill:#000000;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ffffff;word-spacing:0px" xml:space="preserve"><tspan x="23.551184" y="262.96085" style="fill:#006600;stroke-width:1.58;stroke:#ffffff">.footer-left</tspan><tspan x="23.551184" y="271.71085" style="fill:#000000;stroke-width:1.58;stroke:#ffffff"/></text><text x="127.67623" y="245.1963" style="fill:#000000;font-family:Arial;font-size:7px;font-weight:900;letter-spacing:.236px;paint-order:markers stroke fill;stroke-width:1.58;stroke:#ffffff;word-spacing:0px" xml:space="preserve"><tspan x="127.67623" y="245.1963" style="fill:#006600;stroke-width:1.58;stroke:#ffffff">.footer-sidebar</tspan><tspan x="127.67623" y="253.94629" style="fill:#000000;stroke-width:1.58;stroke:#ffffff"/></text><path d="m169 249v7.59" style="fill:#060;marker-end:url(#a);paint-order:markers stroke fill;stroke-width:1.58;stroke:#060"/></svg>  
+  </div>
+</div>
+</details>
+</section>
+
+<br>
+&nbsp;
+<hr>
+<p class="bottom-nav">
+ <span><a href="./getting-started.html" rel="previous" target="_self">Getting Started</a> :<b>Previous Page</b></span> 🏁 <span><b>Next Page</b>: <a href="./site-identity.html" rel="next" target="_self">Site Identity</a></span> 
+
+<!-- Help file ends here -->
+</main>
+
+<nav aria-label="main navigation" itemprop="hasPart" itemscope itemtype="https://www.schema.org/SiteNavigationElement">
+ <ul>
+  <li><a href="./index.html">Help Homepage</a>
+  <li><a href="./getting-started.html">Getting Started</a>
+  <li>Features & Scaffolding
+  <li><a href="./site-identity.html">Site Identity</a>
+  <li><a href="./global-styles.html">Simple Styles Global</a>
+  <li><a href="./bootcms-styles.html">Simple Styles BootCMS</a>
+  <li><a href="./advanced-settings.html">Advanced Settings</a>
+  <li><a href="./posts-settings.html">Posts Settings</a> 
+  <li><a href="./menus.html">Menus</a> 
+  <li><a href="./widgets.html">Widgets</a>
+  <li><a href="./homepage-settings.html">Homepage Settings</a>
+  <li><a href="./additional-css.html">Additional CSS</a>
+  <li><a href="./lorem-ipsum.html">Lorem ipsum</a>
+  <li><a href="#">------------------------------</a>
+  <li><a href="./large-html-editor.html">BootCMS Large HTML Editor</a>    
+ </ul>
+</nav>
+
+<footer itemprop="hasPart" itemscope itemtype="https://schema.org/WPFooter">
+<p>
+Developed by NetBuddy.Net<br>
+&copy; 2014 - <script>document.write(new Date().getFullYear())</script> . <a href="https://netbuddy.net/" target="_blank">NetBuddy.Net</a> . <a href="https://opensource.org/license/MIT" target="_blank">MIT License</a>.
+</footer>
+</body>
+</html>

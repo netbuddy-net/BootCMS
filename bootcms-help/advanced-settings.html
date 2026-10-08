@@ -1,0 +1,119 @@
+<!doctype html>
+<!--
+ * WordPress classic theme
+ * help/getting-started.php 
+ * @link https://github/...
+ * @package bootcms
+ * @since bootcms 2.0
+ *
+ * ========================================================
+   Help - Getting Started doc
+   ========================================================= */
+-->
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>BootCMS | Getting Starting</title>
+ <meta name="description" content=" ">
+ <link rel="stylesheet" href="./help-styles.css"> 
+</head>
+<body itemscope itemtype="https://schema.org/WebPage">
+ <meta itemprop="name" content=" ">
+ <meta itemprop="description" content=" ">
+ <meta itemprop="keywords" content=" "> 
+ <meta itemprop="inLanguage" content=" ">
+ <meta itemprop="author" content=" "> 
+ <meta itemprop="datePublished" content=" ">
+ <meta itemprop="dateModified" content=" ">
+ <link itemprop="isPartOf" href=" "> 
+<header itemprop="hasPart" itemscope itemtype="https://schema.org/WPHeader">
+<h1>BootCMS Classic WP Theme v2.0<br>
+<small>Help Documents</small></h1>
+</header>
+
+<main id="main" itemprop="mainContentOfPage" itemscope itemtype="https://schema.org/WebPageElement">
+<!-- Help file starts here -->
+<h2>Advanced Settings</h2>
+<hr>
+
+<h3 class="medium">JS Libraries & Frameworks</h3>
+<p>
+The BootCMS theme provides an easy way for developers to enable JavaScript libraries and/or frameworks. Enable any of them by selecting the relevant checkbox. The required JavaScript library or framework, together with its corresponding application JS file, is automatically linked to the front end. No PHP code is required to link these files.
+<ol class="important"> 
+<li><strong>Enable WordPress jQuery</strong> - jQuery code can be edited in the existing main JS file "./js/script.js".
+<li><strong>Enable WordPress React (wp.element)</strong> - A JS file "./js/react-app.js" is already provided to start editing immediately.
+<li><strong>Enable Vue on CDN</strong> - A JS file "./js/vue-app.js" is already provided to start editing immediately.
+</ol>
+
+<h3 class="medium">CSS Libraries & Frameworks</h3>
+<p>
+Select the related radio button for the CSS library or framework of choice.
+<ol>
+<li><strong>BootCMS (native)</strong> - This is the framework enabled by default when the BootCMS theme is activated.
+<li><strong>Bootstrap</strong> - Links the Bootstrap framework's CSS and JS files from a CDN.*<br>
+	<u>Bootstrap Version</u><br>
+	When Bootstrap is selected, the Bootstrap Version dropdown menu appears, allowing a choice between versions 4 and 5. 
+<li><strong>Bootswatch</strong> - Links the Bootswatch CSS and Bootstrap JS files from a CDN. Bootswatch is version 5.*<br>
+	<u>Bootswatch theme</u><br>
+	When Bootswatch is selected, an input box appears to enter the name of the Bootswatch theme of choice. The available theme names are displayed above the input box.
+<li><strong>Foundation</strong> - Links the Foundation framework's CSS and JS files from a CDN.*<br>
+	<u>Foundation Version</u><br>
+	When Foundation is selected, the Foundation Version dropdown menu appears, allowing a choice from several versions of Foundation.
+<li><strong>Bulma 1.0.4</strong> - Links the Bulma CSS file from a CDN. Bulma is a CSS library and does not require JS.
+</ol>
+<p class="important">
+<strong>* :</strong> When using <strong>Bootstrap</strong> or <strong>Bootswatch</strong>, the required classes for the <u>Navbar</u> must be entered in the "Simple Styles / Global Section / Nav Tag Classes - Global" control, in order to use the <u>WordPress Menu</u> in <u>Primary Navigation</u>.<br>
+With the <strong>Foundation</strong> framework, the WordPress Menu in Primary Navigation works only with version 6.x.
+
+<h3 class="medium">Disable WP Modules</h3>
+<p>
+<strong>Disable Block Editor</strong><br>
+BootCMS is s classic theme but supports the <strong>Block Editor</strong> for pages and posts. If the Block Editor is not needed, disable it here by selecting the checkbox.<br>
+<strong>Disable WordPress Emojis</strong><br>
+WP Emojis may no longer be needed since modern Operating Systems support Emojis. To disable the WP Emoji code loaded on the frond end, select this checkbox.
+
+<h3 class="medium">Amend the 404 (Not Found) file</h3>
+<strong>404 Page (Not Found) Title</strong><br>
+Enter a title in the input box to replace the default title.<br>
+<strong>Custom HTML 404 content</strong><br>
+Enter any text in the "textarea" box to replace the default content. Up to 500 characters are supported.<br>
+<strong>404 Page Image</strong><br>
+Select an image with the image control to replace the default image. 
+
+<br>
+&nbsp;
+<hr>
+<p class="bottom-nav">
+ <span><a href="./global-styles.html" rel="next" target="_self">Simple Styles BootCMS</a> :<b>Previous Page</b></span> 🏁 <span><b>Next Page</b>: <a href="./posts-settings.html" rel="next" target="_self">Posts Settings</a></span> 
+
+<!-- Help file ends here -->
+</main>
+
+<nav aria-label="main navigation" itemprop="hasPart" itemscope itemtype="https://www.schema.org/SiteNavigationElement">
+ <ul>
+  <li><a href="./index.html">Help Homepage</a>
+  <li><a href="./getting-started.html">Getting Started</a>
+  <li><a href="./features-scaffolding.html">Features & Scaffolding</a>
+  <li><a href="./site-identity.html">Site Identity</a>
+  <li><a href="./global-styles.html">Simple Styles Global</a>
+  <li><a href="./bootcms-styles.html">Simple Styles BootCMS</a>
+  <li>Advanced Settings
+  <li><a href="./posts-settings.html">Posts Settings</a> 
+  <li><a href="./menus.html">Menus</a> 
+  <li><a href="./widgets.html">Widgets</a>
+  <li><a href="./homepage-settings.html">Homepage Settings</a>
+  <li><a href="./additional-css.html">Additional CSS</a>
+  <li><a href="./lorem-ipsum.html">Lorem ipsum</a>  
+  <li><a href="#">------------------------------</a>
+  <li><a href="./large-html-editor.html">BootCMS Large HTML Editor</a>
+ </ul>
+</nav>
+
+<footer itemprop="hasPart" itemscope itemtype="https://schema.org/WPFooter">
+<p>
+Developed by NetBuddy.Net<br>
+&copy; 2014 - <script>document.write(new Date().getFullYear())</script> . <a href="https://netbuddy.net/" target="_blank">NetBuddy.Net</a> . <a href="https://opensource.org/license/MIT" target="_blank">MIT License</a>.
+</footer>
+</body>
+</html>
