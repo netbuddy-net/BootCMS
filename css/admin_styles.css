@@ -1,0 +1,69 @@
+/** 
+ * WordPress classic theme
+ * css/admin_styles.css
+ * @link https://github/...
+ * @package BootCMS
+ * @since 2.0
+ */
+ 
+/* Admin (Simple Styles) section */
+#customize-control-title_global_section,
+#customize-control-title_bootcms_section {
+  border-top: 3px double darkgrey;
+  padding-top: 10px;
+  color: var(--wp-admin-theme-color);
+}
+#customize-control-title_bootcms_section {
+  margin-top: 10px;	
+}
+
+#customize-control-header_text_color,
+#customize-control-header_description,
+#customize-control-navbar_info,
+#customize-control-navbar_text_color,
+#customize-control-main_tag_classes,
+#customize-control-main_text_color,
+#customize-control-aside_text_color,
+#customize-control-footer_text_color,
+#customize-control-footer_description,
+#customize-control-page_background_color {
+  border-top: 1px solid darkgrey;
+  padding-top: 10px;
+}
+#customize-control-bootcms_top_container_type {
+  padding-bottom: 0px;
+  margin-bottom: 0px;  
+}
+#customize-control-navbar_info,
+#accordion-section-bootcms_menu_section {
+  padding-bottom: 10px !important;	
+}
+.framework-nav-text {	
+  color: darkred;
+}
+.framework-nav-text::before {
+  content: "\2261";
+  font-weight: bold;
+  padding: 0px 4px;
+  margin-right: 10px;
+  border: 1px solid darkred;
+  border-radius: 3px;
+}
+#customize-control-js_support,
+#customize-control-bootcms_enable_jquery,
+#customize-control-bootcms_enable_react {
+  margin-bottom: 0px;	
+}
+.help-links {
+ display:inline-block; 
+ margin-left: 15px; 
+ padding:8px 14px; 
+ background: transparent; 
+ color:var(--wp-admin-theme-color); 
+ text-decoration:none; 
+ border:1px solid var(--wp-admin-theme-color);	
+ width: 75%;
+}
+.help-links:hover {
+ background: rgba(var(--wp-admin-theme-color--rgb), .1);
+}
