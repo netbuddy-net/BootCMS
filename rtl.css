@@ -1,0 +1,14 @@
+/* code by WP */
+.wp-block-query-title{box-sizing:border-box;}
+/* BootCMS code */
+nav.bootcms-navbar .sub-menu .sub-menu {
+  top: 1rem;
+  right: 100%;	
+}
+nav.bootcms-navbar .menu-item-has-children > a::after {
+  margin-right: 0.6em;  
+}
+nav.bootcms-navbar .sub-menu .menu-item-has-children > a::after {
+  transform: rotate(130deg);
+  margin-right: 0.6em;
+}
