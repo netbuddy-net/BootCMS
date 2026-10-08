@@ -1,0 +1,411 @@
+/**
+ * WordPress classic theme
+ * /css/bootcms.css 
+ * @link https://github/...
+ * @package bootcms
+ * @since bootcms 2.0
+ */
+ 
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+/** Main content containers **/
+.bootcms-container-fluid {
+  width: 100%;  
+}
+@media (max-width: 575px) {
+.bootcms-container {
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;  
+}}
+@media (min-width: 576px) {
+.bootcms-container {	
+  margin-left: auto;
+  margin-right: auto;
+  width: 540px;
+}}
+@media (min-width: 768px) {
+.bootcms-container {
+  width: 720px;	
+}}
+@media (min-width: 992px) {
+.bootcms-container {
+  width: 960px;	
+}}
+@media (min-width: 1200px) {
+.bootcms-container {
+  width: 1140px;	
+}}
+@media (min-width: 1400px) {
+.bootcms-container {
+  width: 1320px;	
+}}
+
+/** Minimum styles **/
+/* basic margins - paddings */
+.bootcms-header,
+main,
+.bootcms-footer {
+  padding-left: 1.66rem;
+  padding-right: 1.66rem;  
+}
+html,
+body,
+nav.bootcms-navbar .menu,
+nav.bootcms-navbar .menu > li,
+nav.bootcms-navbar .sub-menu > li {
+  margin: 0;  
+}
+nav.bootcms-navbar .menu {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.footer-baseline {
+  padding-bottom: 1rem;	
+}
+/* the main layout with the footer at the viewport edge */
+html {
+  min-height: 100%;	
+}
+.bootcms-container,
+.bootcms-container-fluid {
+  display: table;
+  height: 100vh;
+  column-count: 2;
+}
+/* frontpage and page divs, wrap main and right aside tags */
+header,
+nav.bootcms-navbar,
+.frontpage-main-section,
+.pages-main-section,
+footer {
+  display: table-row;
+}
+.frontpage-main-section,
+.pages-main-section,
+main {
+  height: 100%; 
+}
+.section-wrapper {
+  display: table;
+  width: 100%;
+  height:100%;  
+}
+.frontpage-main-section main,
+.pages-main-section main {
+  display: table-cell;
+}
+.frontpage-main-section aside,
+.pages-main-section aside {
+  display: table-cell;
+  height: 100%;
+}
+.frontpage-main-section > .section-wrapper:not(:has(aside)) main,
+.pages-main-section > .section-wrapper:not(:has(aside)) main {
+  width: 100%;
+  height: 100%;
+}
+/* minimize height */
+header,
+footer {
+  height: 1px;	
+}
+nav.bootcms-navbar {
+  position: relative;
+  height: 1px;  
+}
+/* bootcms menu styles */
+.bootcms-navbar .sub-menu,
+.bootcms-navbar {
+  background-color: white;	
+}
+nav.bootcms-navbar .menu {
+  display: flex;
+  list-style: none;   
+}
+/*
+.bootcms-navbar ul.menu { 
+ padding-inline-start: 0 !important;
+ justify-content: center;
+} 
+*/
+@media (max-width: 575px) {
+nav.bootcms-navbar .menu {
+  flex-direction: column;
+}
+}
+nav.bootcms-navbar .menu > li,
+nav.bootcms-navbar .sub-menu > li {
+  position: relative;
+}
+nav.bootcms-navbar .current-menu-item {
+  border-bottom: 2px solid currentColor;
+}
+nav.bootcms-navbar .menu-item-has-children > a::after {
+  content: " ";
+  display: inline-block;
+  width: 0.4em;
+  height: 0.4em;
+  margin-left: 0.6em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  vertical-align: 0.2em;
+}
+/* bootcms submenu styles */
+nav.bootcms-navbar .sub-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 9999;
+  display: none;
+  margin: 0;
+  padding: 0;
+  min-width: 10rem;
+  list-style: none;
+}
+nav.bootcms-navbar .sub-menu .sub-menu {
+  top: 1rem;
+  left: 100%;	
+}
+nav.bootcms-navbar .sub-menu .menu-item-has-children > a::after {
+  transform: rotate(-45deg);
+  vertical-align: 0;
+}
+/* display sub-menu */
+nav.bootcms-navbar li:hover > .sub-menu,
+nav.bootcms-navbar li:focus-within > .sub-menu {
+  display: block;
+  border-top: 1px solid color-mix(in srgb, currentColor, white 80%);
+}
+/* modern style for the navigation text */
+nav.bootcms-navbar a {
+  display: block;
+  padding: 0.5rem 1rem;  
+  color: inherit;
+  text-decoration: none;	
+}
+nav.bootcms-navbar li:not(.menu-disabled) a:hover,
+nav.bootcms-navbar li:not(.menu-disabled) a:focus { 
+  -webkit-text-stroke: 0.6px currentColor;
+  text-stroke: 0.6px currentColor;
+}
+/* restrict header image inside the header */
+.bootcms-header::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/** bootcms Navbar mobile **/
+.navbar-mobile-bar {
+  padding: 0.5em;
+  position: relative;
+  min-height: 2.5em;
+}
+.navbar-mobile-icon {
+  position: absolute;
+  left: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.navbar-mobile-icon img {
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+}
+.navbar-mobile-title {
+  font-weight: bold;
+  text-align: center;
+  line-height: 2.5em;
+}
+.navbar-toggle {
+  display: block;
+  color: inherit; 
+  padding: 0.1em 0.4em;
+  border: 0.1em solid currentColor;
+  border-radius: 0.6em;
+  background: transparent;
+  cursor: pointer;
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+}  
+.navbar-toggle span {
+  display: block;
+  width: 2em;
+  height: 0.25em;
+  margin: 0.4em 0;
+  border-radius: 0.4em;
+  background-color: currentColor;
+}
+@media (min-width: 576px) {
+nav.bootcms-navbar > .navbar-mobile-bar {
+  display: none;
+}
+nav.bootcms-navbar > .menu-main-navigation-container {
+  display: block;	
+}
+}
+@media (max-width: 575px) {
+nav.bootcms-navbar > .navbar-mobile-bar {
+  display: block;
+}
+nav.bootcms-navbar > .menu-main-navigation-container {
+  display: none;	
+}
+nav.bootcms-navbar > .menu-main-navigation-container.is-open {
+  display: block;	
+}
+nav.bootcms-navbar .menu {
+  padding-inline: 10px;
+}
+nav.bootcms-navbar .sub-menu {
+  position: static;
+  width: 100%;
+  border-bottom: 1px solid color-mix(in srgb, currentColor, white 80%);
+}
+nav.bootcms-navbar .sub-menu .menu-item-has-children > a::after {
+  transform: rotate(45deg);
+}
+}
+/* end of Navbar mobile */
+/** Header layout **/
+/* ----- */
+@media (min-width: 576px) {
+.no-image-no-sidebar {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+.no-image-no-sidebar .header-content {
+    grid-column: 1;
+    grid-row: 1;
+}
+/* ----- */
+.no-image-sidebar {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    column-gap: 1rem;
+}
+.no-image-sidebar .header-content {
+    grid-column: 1;
+    grid-row: 1;
+}
+.no-image-sidebar .header-sidebar {
+    grid-column: 2;
+    grid-row: 1;
+}
+/* ------ */
+.image-left-no-sidebar {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    column-gap: 1rem;
+}
+.image-left-no-sidebar .header-image {
+    grid-column: 1;
+    grid-row: 1;
+}
+.image-left-no-sidebar .header-content {
+    grid-column: 2;
+    grid-row: 1;
+}
+/* ------ */
+.image-top-no-sidebar {
+    display: grid;
+    grid-template: auto auto / 1fr;
+}
+.image-top-no-sidebar .header-image {
+    grid-column: 1;
+    grid-row: 1;
+}
+.image-top-no-sidebar .header-content {
+    grid-column: 1;
+    grid-row: 2;
+}
+/* ----- */
+.image-left-sidebar {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    column-gap: 1rem;
+}
+.image-left-sidebar .header-image {
+    grid-column: 1;
+    grid-row: 1;
+}
+.image-left-sidebar .header-content {
+    grid-column: 2;
+    grid-row: 1;
+}
+.image-left-sidebar .header-sidebar {
+    grid-column: 3;
+    grid-row: 1;
+}
+/* ----- */
+.image-top-sidebar {
+    display: grid;
+    grid-template: auto auto / 3fr 1fr;
+    column-gap: 1rem;
+}
+.image-top-sidebar .header-image {
+    grid-column: 1 / -1;
+    grid-row: 1;
+}
+.image-top-sidebar .header-content {
+    grid-column: 1;
+    grid-row: 2;
+}
+.image-top-sidebar .header-sidebar {
+    grid-column: 2;
+    grid-row: 2;
+}
+/* ---- */
+.header-image > img,
+#foot_logo_img {
+    width: 100%;
+    height: auto;
+}
+}
+@media (max-width: 575px) {
+.bootcms-header {
+  grid-template-columns: 1fr;
+}
+.header-image > img {
+    width: 100%;
+    height: auto;
+}
+}
+/** Footer layout **/
+@media (min-width: 576px) {
+.bootcms-footer {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+	column-gap: 1rem;
+}
+.bootcms-footer .footer-baseline {
+    grid-column: 1 / -1;
+}
+/* First widget doesn't exist */
+.bootcms-footer:not(:has(.footer-left > *)):has(.footer-main > *):has(.footer-sidebar > *) {
+    grid-template-columns: 2fr 1fr;
+}
+/* Last widget doesn't exist */
+.bootcms-footer:has(.footer-left > *):has(.footer-main > *):not(:has(.footer-sidebar > *)) {
+    grid-template-columns: 1fr 2fr;
+}
+/* Middle widget doesn't exist */
+.bootcms-footer:has(.footer-left > *):not(:has(.footer-main > *)):has(.footer-sidebar > *) {
+    grid-template-columns: 1fr 1fr;
+}
+/* Only one widget exists */
+.bootcms-footer:has(.footer-left > *):not(:has(.footer-main > *)):not(:has(.footer-sidebar > *)),
+.bootcms-footer:not(:has(.footer-left > *)):has(.footer-main > *):not(:has(.footer-sidebar > *)),
+.bootcms-footer:not(:has(.footer-left > *)):not(:has(.footer-main > *)):has(.footer-sidebar > *) {
+    grid-template-columns: 100%;
+}	
+}
+@media (max-width: 575px) {
+  .bootcms-footer {
+	grid-template-columns: 1fr;
+  }
+}
