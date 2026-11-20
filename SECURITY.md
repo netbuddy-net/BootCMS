@@ -12,7 +12,7 @@ Security vulnerabilities in BootCMS should be reported privately.
 
 Please do not disclose security vulnerabilities through public GitHub Issues or Discussions.
 
-To report a vulnerability, please email <info@netbuddy.net> with details of the issue, including steps to reproduce it where possible.
+To report a vulnerability, please email <bootcms@netbuddy.net> with details of the issue, including steps to reproduce it where possible.
 
 Security reports will be reviewed and, where appropriate, addressed in a future release.
 
