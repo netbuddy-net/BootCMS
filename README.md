@@ -1,5 +1,5 @@
 # BootCMS classic WordPress theme v2.0
-![BootCMS image](screenshot.png)
+![BootCMS image](screenshot.jpg)
 
 BootCMS v2.0 is a **lightweight**, **easy to use** and **flexible** classic WordPress theme for beginners and advanced website creators. Provides a clean, flexible foundation with no unnecessary code, while making it easy to use CSS and JS frameworks or libraries as needed. Includes a comprehensive *Help* system.
 
