@@ -2,9 +2,9 @@
 /** 
  * WordPress classic theme
  * search.php
- * @link https://github/...
+ * @link https://github.com/netbuddy-net/BootCMS
  * @package BootCMS
- * @since 2.0
+ * @since 2.1
  */
 
 get_header();
@@ -84,14 +84,14 @@ function bootcms_search_snippets( $content, $search ) {
 	if ( count( $snippets ) >= 2 ) { break; }
   }
   return array(
-	'count'    => $occurrences,
+	'bootcms'  => $occurrences,
 	'snippets' => $snippets,
   );
 }
 ?>
 <div class="pages-main-section">
 <div class="section-wrapper">
-<?php $main_tag_classes = get_theme_mod( 'main_tag_classes', '' );
+<?php $main_tag_classes = get_theme_mod( 'bootcms_main_tag_classes', '' );
   if ( $main_tag_classes ) { $main_tag_class = $main_tag_classes;} else {$main_tag_class = 'main-tag';} ?>
 <main id="main" class="<?php echo esc_attr( $main_tag_class ); ?>" itemprop="mainContentOfPage" itemscope itemtype="https://schema.org/WebPageElement">
   <header class="page-header">
@@ -103,7 +103,7 @@ function bootcms_search_snippets( $content, $search ) {
 	?>
 	</h2>
 	<div class="search-form">
-	  <?php echo do_shortcode( '[bootcms_search]' ); ?>
+	  <?php get_search_form(); ?>
 	</div>		
   </header>
   <?php if ( have_posts() ) : ?>
@@ -122,16 +122,18 @@ function bootcms_search_snippets( $content, $search ) {
 	<?php if ( ! empty( $search_data ) ) : ?>
 	<div class="search-occurrences">
 	<?php
-	  printf(
-		esc_html(
-		  _n(
-			'%d occurrence',
-			'%d occurrences',
-			$search_data['count'],
-			'bootcms'
-		) ),
-		$search_data['count']
-	  );
+	$occurrence_count = $search_data['bootcms'];
+	printf(
+    esc_html(
+	  _n(
+		'%d occurrence',
+		'%d occurrences',
+		$occurrence_count,
+		'bootcms'
+	  )
+    ),
+    $occurrence_count
+	);
 	?>
 	</div>
 	<div class="search-snippets">
@@ -139,7 +141,7 @@ function bootcms_search_snippets( $content, $search ) {
 		<?php foreach ( $search_data['snippets'] as $snippet ) : ?>
 		<span> ... </span><?php echo wp_kses( $snippet, array( 'mark' => array() ) ); ?><span> ... </span><br>                               
 		<?php endforeach; ?>
-		<?php if ( $search_data['count'] > 2 ) : ?>
+		<?php if ( $search_data['bootcms'] > 2 ) : ?>
 		<span class="search-more">... ... ...</span>
 		<?php endif; ?>
 	  </p>

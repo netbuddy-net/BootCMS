@@ -2,9 +2,9 @@
 /**
  * WordPress classic theme
  * inc/bootcms-editor.php
- * @link https://github/...
+ * @link https://github.com/netbuddy-net/BootCMS
  * @package BootCMS
- * @since 2.0
+ * @since 2.1
  */
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 /* =========================================================
@@ -59,8 +59,7 @@ class BootCMS_Large_Editor_Widget extends WP_Widget {
   class="bootcms-widget-content sync-input"
   id="<?php echo esc_attr( $this->get_field_id( 'content' ) ); ?>"
   name="<?php echo esc_attr( $this->get_field_name( 'content' ) ); ?>"
-  style="display:none;" >
-  <?php echo esc_textarea( $content ); ?>
+  style="display:none;" ><?php echo esc_textarea( $content ); ?>
 </textarea>
 <?php
   }
@@ -86,7 +85,7 @@ class BootCMS_Large_Editor_Control extends WP_Customize_Control {
   id="<?php echo esc_attr( $this->id ); ?>"
   class="bootcms-customizer-editor sync-input"
   style="display:none;" >
-  <?php echo esc_textarea( $this->editor_mode === 'javascript' ? '' : $this->value() ); ?>
+  <?php echo esc_textarea( 'javascript-global' === $this->editor_mode ? '' : $this->value() ); ?>
 </textarea>
 <button
   type="button"
@@ -106,13 +105,61 @@ function bootcms_register_large_editor_widget() {
 }
 add_action( 'widgets_init', 'bootcms_register_large_editor_widget' );
 
+/* Reactivate large editor widgets after theme reactivation */
+function bootcms_restore_large_editor_widgets() {
+  $saved = get_theme_mod( 'sidebars_widgets', array() );
+  if ( empty( $saved['data'] ) || ! is_array( $saved['data'] ) ) {
+    return; }
+  $sidebars_widgets = wp_get_sidebars_widgets();
+  $registered_sidebars = $GLOBALS['wp_registered_sidebars'];
+  $registered_widgets = $GLOBALS['wp_registered_widgets'];
+  foreach ( $saved['data'] as $sidebar_id => $saved_widget_ids ) {
+    if (
+      ! isset( $registered_sidebars[$sidebar_id] ) ||
+      ! is_array( $saved_widget_ids )
+    ) { continue; }
+    $restore_ids = array();
+    foreach ( $saved_widget_ids as $widget_id ) {
+      if (
+        strpos( $widget_id, 'bootcms_large_editor-' ) === 0 &&
+        isset( $registered_widgets[$widget_id] )
+      ) { $restore_ids[] = $widget_id; } }
+    if ( empty( $restore_ids ) ) { continue; }
+    // Remove these widgets from their current locations.
+    foreach ( $sidebars_widgets as $current_sidebar => $current_ids ) {
+      if ( is_array( $current_ids ) ) {
+        $sidebars_widgets[$current_sidebar] = array_values(
+          array_diff( $current_ids, $restore_ids )
+    ); } }
+    $current_ids = $sidebars_widgets[$sidebar_id] ?? array();
+    $restored_ids = array();
+    // Restore the original order, retaining existing widgets.
+    foreach ( $saved_widget_ids as $widget_id ) {
+      if (
+        in_array( $widget_id, $restore_ids, true ) ||
+        in_array( $widget_id, $current_ids, true )
+      ) {
+        if ( ! in_array( $widget_id, $restored_ids, true ) ) {
+          $restored_ids[] = $widget_id;
+    } } }
+    // Preserve any additional widgets added since.
+    foreach ( $current_ids as $widget_id ) {
+      if ( ! in_array( $widget_id, $restored_ids, true ) ) {
+        $restored_ids[] = $widget_id;
+    } }
+    $sidebars_widgets[$sidebar_id] = $restored_ids;
+  }
+  wp_set_sidebars_widgets( $sidebars_widgets );
+}
+add_action( 'after_switch_theme', 'bootcms_restore_large_editor_widgets', 20 );
+
 function bootcms_large_editor_modal() {
 ?>
 <div id="bootcms-modal-backdrop"></div>
   <div id="bootcms-large-editor-modal" class="bootcms-editor-modal" style="display:none;">
 	<div class="bootcms-editor-window">
 	  <div class="bootcms-editor-header">
-		<span><?php esc_html_e( 'BootCMS Large HTML Editor', 'bootcms' ); ?></span>
+		<span><?php esc_html_e( 'BootCMS Large Editor', 'bootcms' ); ?></span>
 		<span>
 		  <button type="button" class="bootcms-modal-minimise">&minus;</button>
 		  <button type="button" class="bootcms-modal-maximise">&#9633;</button>
@@ -125,16 +172,13 @@ function bootcms_large_editor_modal() {
 		<textarea id="bootcms-large-editor" name="bootcms_large_editor"></textarea>							
 	  </div>
 	  <div class="bootcms-editor-footer">
-		<div id="bootcms-javascript-buttons" style="display:none;margin-right:auto;">
-		  <select id="bootcms-javascript-file">
-			<option value="">Select a JavaScript file</option>
-		  </select>
-		  <button type="button" class="button button-secondary bootcms-javascript-open">
-			<?php esc_html_e( 'Open', 'bootcms' ); ?>
-		  </button>
-		  <button type="button" class="button button-secondary bootcms-javascript-save">
-			<?php esc_html_e( 'Save', 'bootcms' ); ?>
-		  </button>
+		<div id="bootcms-global-javascript-buttons" style="display:none;margin-right:auto;">
+  <button type="button" class="button button-secondary bootcms-global-javascript-load">
+    <?php esc_html_e( 'Load', 'bootcms' ); ?>
+  </button>
+  <button type="button" class="button button-secondary bootcms-global-javascript-save">
+    <?php esc_html_e( 'Save', 'bootcms' ); ?>
+  </button> 
 		</div>
 		<button type="button" class="button button-secondary bootcms-modal-close" aria-label="<?php esc_attr_e( 'Close', 'bootcms' ); ?>" >
 		  <span>Close</span>
@@ -153,83 +197,83 @@ function bootcms_large_editor_script() {
   $loaded = true;
 ?>
   <script>
-  	var bootcmsEditorAjax = {
+  	var bootcmsEditorAjax = { 
 	  url: '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>',
-	  nonce: '<?php echo esc_js( wp_create_nonce( 'bootcms_edit_javascript' ) ); ?>'
+	  nonce: '<?php echo esc_js( wp_create_nonce( 'bootcms_custom_javascript' ) ); ?>'
 	};
 	jQuery(function($) {
 	  var $modal = $('#bootcms-large-editor-modal');
-	  $(document).on('click', '.bootcms-open-large-editor', function() {
-		var textarea = $('#' + $(this).data('textarea'));
-		$modal.data('textarea', textarea);
-		$modal.data('editor-mode', $(this).data('editor-mode'));
-		$('#bootcms-javascript-buttons').hide();
-		$('#bootcms-javascript-file-selector').hide();
-		if ( $modal.data('editor-mode') === 'javascript' ) {
-		  $('#bootcms-javascript-buttons').show();
-		  $('#bootcms-javascript-file-selector').show();
-		  var $select = $('#bootcms-javascript-file');
-		  window.bootcmsEditor.codemirror.setOption('mode', 'text/javascript');
-		  $select.empty();
-		  $select.append('<option value="">Select a JavaScript file</option>');
-		  $.post(bootcmsEditorAjax.url, {
-			action: 'bootcms_get_javascript_files',
-			nonce: bootcmsEditorAjax.nonce
-		  }, function(response) {
-			if (response.success) {
-			  $.each(response.data, function(index, file) {
-				$select.append(
-				  $('<option>', {
-					value: file,
-					text: file
-				  })
-				);
-			  });
-			}
-		  });
-		}
-		$modal.show();
-		$('#bootcms-large-editor-modal').addClass('bootcms-modal-ismaximised');
-		$('#bootcms-modal-backdrop').show();		
-		setTimeout(function() {
-          window.bootcmsEditor.codemirror.setValue(textarea.val());
-          window.bootcmsEditor.codemirror.refresh();
-		}, 0);	
-	  });
-	  $(document).on('click', '.bootcms-javascript-open', function() {
-		var file = $('#bootcms-javascript-file').val();
-		if ( ! file ) { return; }
-		$.post(bootcmsEditorAjax.url, {
-		  action: 'bootcms_get_chosen_js_file',
-		  nonce: bootcmsEditorAjax.nonce,
-		  file: file
-		}, function(response) {
-		  if (response.success) {
-			window.bootcmsEditor.codemirror.setValue(response.data.content);
-			window.bootcmsEditor.codemirror.refresh();
-			$('#bootcms-javascript-file-selector').hide();
-		  }
-		});
-	  });
-	  $(document).on('click', '.bootcms-javascript-save', function() {
-		var file = $('#bootcms-javascript-file').val();
-		var content = window.bootcmsEditor.codemirror.getValue();
-		if ( ! file ) { return; }
-		$.post(bootcmsEditorAjax.url, {
-		  action: 'bootcms_save_chosen_js_file',
-		  nonce: bootcmsEditorAjax.nonce,
-		  file: file,
-		  content: content
-		}, function(response) {
-		  if (response.success) {
-			alert('<?php echo esc_js( __( 'File saved', 'bootcms' ) ); ?>');
-		  } else {
-			console.error(
-			  '<?php echo esc_js( __( 'Save failed:', 'bootcms' ) ); ?>', response.data
-			);
-		  }
-		});
-	  });
+	  var bootcmsSavedJavascript = '';
+function bootcmsLoadCustomJavascript() {
+  $.post(bootcmsEditorAjax.url, {
+    action: 'bootcms_get_custom_javascript',
+    nonce: bootcmsEditorAjax.nonce
+  }, function(response) {
+    if (response.success) {		
+      window.bootcmsEditor.codemirror.setValue(response.data.content);
+      window.bootcmsEditor.codemirror.refresh();
+	  bootcmsSavedJavascript = response.data.content;
+    } else {
+      console.error('Load failed:', response.data);
+    }
+  });
+}	  
+	  
+$(document).on('click', '.bootcms-open-large-editor', function() {
+  var textarea = $('#' + $(this).data('textarea'));
+  var mode = $(this).data('editor-mode');
+
+  $modal.data('textarea', textarea);
+  $modal.data('editor-mode', mode);
+
+  $('#bootcms-global-javascript-buttons').hide();
+
+  window.bootcmsEditor.codemirror.setOption(
+    'mode',
+    mode === 'javascript-global' ? 'javascript' : 'htmlmixed'
+  );
+
+  $modal.show();
+  $('#bootcms-large-editor-modal').addClass('bootcms-modal-ismaximised');
+  $('#bootcms-modal-backdrop').show();
+
+  if ( mode === 'javascript-global' ) {
+    $('#bootcms-global-javascript-buttons').show();
+    window.bootcmsEditor.codemirror.setValue('');
+    bootcmsLoadCustomJavascript();
+  } else {
+    setTimeout(function() {
+      window.bootcmsEditor.codemirror.setValue(textarea.val());
+      window.bootcmsEditor.codemirror.refresh();
+    }, 0);
+  }
+});
+
+$(document).on('click', '.bootcms-global-javascript-load', function() {
+  bootcmsLoadCustomJavascript();
+});
+
+$(document).on('click', '.bootcms-global-javascript-save', function() {
+	console.log('Global JavaScript Save clicked');
+  var content = window.bootcmsEditor.codemirror.getValue();
+
+  $.post(bootcmsEditorAjax.url, {
+    action: 'bootcms_save_custom_javascript',
+    nonce: bootcmsEditorAjax.nonce,
+    content: content
+  }, function(response) {
+    if (response.success) {
+	  bootcmsSavedJavascript = content;
+      alert('<?php echo esc_js( __( 'JavaScript saved', 'bootcms' ) ); ?>');
+    } else {
+      console.error(
+        '<?php echo esc_js( __( 'Save failed:', 'bootcms' ) ); ?>',
+        response.data
+      );
+    }
+  });
+});
+
 	  bootcmsEditor.codemirror.on("change", function() {
 		var textarea = $modal.data("textarea");
 		if ( textarea ) {
@@ -237,10 +281,25 @@ function bootcms_large_editor_script() {
 		  textarea.trigger("change");
 		}
 	  });
-	  $(document).on('click', '.bootcms-editor-close, .bootcms-modal-close', function() {
-		$('#bootcms-modal-backdrop').hide();
-		$('#bootcms-large-editor-modal').attr('class', 'bootcms-editor-modal').removeAttr('style').hide();
-	  });  
+$(document).on('click', '.bootcms-editor-close, .bootcms-modal-close', function() {
+
+  if (
+    $modal.data('editor-mode') === 'javascript-global' &&
+    window.bootcmsEditor.codemirror.getValue() !== bootcmsSavedJavascript
+  ) {
+    if ( ! confirm(
+	  '<?php echo esc_js( __( 'You have unsaved changes. Close without saving?', 'bootcms' ) ); ?>'
+	) ) {
+      return;
+    }
+  }
+
+  $('#bootcms-modal-backdrop').hide();
+  $('#bootcms-large-editor-modal')
+    .attr('class', 'bootcms-editor-modal')
+    .removeAttr('style')
+    .hide();
+});  
 	  $(document).on('click', '.bootcms-modal-minimise', function() {  
 		$modal.css({'transform': 'translate(-45%, 30%) scale(0.07)'}); 
 		if ($('#bootcms-large-editor-modal').hasClass('bootcms-modal-ismaximised')) {
@@ -322,68 +381,54 @@ function bootcms_large_editor_script() {
 add_action( 'admin_footer-widgets.php', 'bootcms_large_editor_script' );
 add_action( 'customize_controls_print_footer_scripts', 'bootcms_large_editor_script' );
 
-function bootcms_get_javascript_files() {	
-  if ( ! current_user_can( 'edit_themes' ) ) {
-	wp_send_json_error( 'Permission denied.', 403 );
+function bootcms_get_custom_javascript() {
+  if ( ! current_user_can( 'edit_theme_options' ) ) {
+    wp_send_json_error( 'Permission denied.', 403 );
   }
-  check_ajax_referer( 'bootcms_edit_javascript', 'nonce' );
-  $js_dir = get_template_directory() . '/js/';
-  $files  = glob( $js_dir . '*.js' );
-  $result = array();
-  foreach ( $files as $file ) {
-	$result[] = basename( $file );
-  }
-  wp_send_json_success( $result );
-}
-add_action( 'wp_ajax_bootcms_get_javascript_files', 'bootcms_get_javascript_files' );
 
-function bootcms_get_chosen_js_file() {
-  if ( ! current_user_can( 'edit_themes' ) ) {
-	wp_send_json_error( 'Permission denied.', 403 );
-  }
-  check_ajax_referer( 'bootcms_edit_javascript', 'nonce' );
-  $file = isset( $_POST['file'] ) ? sanitize_file_name( $_POST['file'] ) : '';
-  if ( ! $file || substr( $file, -3 ) !== '.js' ) {
-	wp_send_json_error( 'Invalid file.' );
-  }
-  $js_dir  = get_template_directory() . '/js/';
-  $filepath = $js_dir . $file;
-  if ( ! file_exists( $filepath ) ) {
-	wp_send_json_error( 'File not found.' );
-  }
-  wp_send_json_success(
-	array(
-	  'file'    => $file,
-	  'content' => file_get_contents( $filepath ),
-  ) );
-}
-add_action( 'wp_ajax_bootcms_get_chosen_js_file', 'bootcms_get_chosen_js_file' );
+  check_ajax_referer( 'bootcms_custom_javascript', 'nonce' );
 
-function bootcms_save_chosen_js_file() {
-  if ( ! current_user_can( 'edit_themes' ) ) {
-	wp_send_json_error( 'Permission denied.', 403 );
-  }
-  check_ajax_referer( 'bootcms_edit_javascript', 'nonce' );
-  $file = isset( $_POST['file'] ) ? sanitize_file_name( $_POST['file'] ) : '';
-  $content = isset( $_POST['content'] ) ? wp_unslash( $_POST['content'] ) : '';
-  if ( ! $file || substr( $file, -3 ) !== '.js' ) {
-	wp_send_json_error( 'Invalid file.' );
-  }
-  $js_dir  = get_template_directory() . '/js/';
-  $filepath = $js_dir . $file;
-  if ( ! file_exists( $filepath ) ) {
-	wp_send_json_error( 'File not found.' );
-  }
-  if ( false === file_put_contents( $filepath, $content ) ) {
-	wp_send_json_error( 'Unable to save file.' );
-  }
   wp_send_json_success(
-	array(
-	  'file' => $file,
-	)
-  ); 
+    array(
+      'content' => get_option( 'bootcms_custom_javascript', '' ),
+    )
+  );
 }
-add_action( 'wp_ajax_bootcms_save_chosen_js_file', 'bootcms_save_chosen_js_file' );
+add_action( 'wp_ajax_bootcms_get_custom_javascript', 'bootcms_get_custom_javascript' );
+
+function bootcms_save_custom_javascript() {
+  if ( ! current_user_can( 'edit_theme_options' ) ) {
+    wp_send_json_error( 'Permission denied.', 403 );
+  }
+
+  check_ajax_referer( 'bootcms_custom_javascript', 'nonce' );
+
+  $content = isset( $_POST['content'] )
+    ? wp_unslash( $_POST['content'] )
+    : '';
+
+  update_option( 'bootcms_custom_javascript', $content );
+
+  wp_send_json_success();
+}
+add_action( 'wp_ajax_bootcms_save_custom_javascript', 'bootcms_save_custom_javascript' );
+
+function bootcms_output_custom_javascript() {
+  $content = get_option( 'bootcms_custom_javascript', '' );
+
+  if ( '' === trim( $content ) ) {
+    return;
+  }
+
+  wp_print_inline_script_tag(
+    $content,
+    array(
+      'id' => 'bootcms-custom-javascript',
+    )
+  );
+}
+add_action( 'wp_footer', 'bootcms_output_custom_javascript', 100 );
+
 
 function bootcms_large_editor_assets() {
   $settings = wp_enqueue_code_editor(

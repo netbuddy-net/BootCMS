@@ -2,9 +2,9 @@
 /** 
  * WordPress classic theme
  * index.php
- * @link https://github/...
+ * @link https://github.com/netbuddy-net/BootCMS
  * @package BootCMS
- * @since 2.0
+ * @since 2.1
  */
  
 get_header(); 
@@ -23,7 +23,7 @@ get_header();
 	  the_content();
 	endwhile;
     else : ?>
-	  <p><?php esc_html_e( 'Sorry, no posts matched your criteria.', 'BootCMS' ); ?></p>
+	  <p><?php esc_html_e( 'Sorry, no posts matched your criteria.', 'bootcms' ); ?></p>
   <?php endif; ?>
 </main>
 

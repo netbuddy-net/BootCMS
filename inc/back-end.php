@@ -2,9 +2,9 @@
 /**
  * WordPress classic theme
  * inc/back-end.php
- * @link https://github/...
+ * @link https://github.com/netbuddy-net/BootCMS
  * @package BootCMS
- * @since 2.0
+ * @since 2.1
  */
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly 
 /* ========================================================
@@ -14,38 +14,23 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 /*** Site Identity Section ***/
 /* Add copyright fields and Logo */
 function bootcms_customize_register( $wp_customize ) {
-// Logo
-  $wp_customize->add_setting( 'bootcms_logo', array(
-	'default'           => '',
-	'sanitize_callback' => 'absint',
-  ) );
-  $wp_customize->add_control( new WP_Customize_Media_Control(
-	  $wp_customize, 'bootcms_logo', array(
-		'label'       => __( 'Site Logo', 'bootcms' ),
-		'section'     => 'title_tagline',
-		'mime_type'   => 'image',
-		'priority'	  => 70,
-		'description' => __( 'Upload a logo. Enable it in the "<strong>Simple Styles</strong>" section.', 'bootcms' ),
-	  )
-	)
-  );
 // Copyright Name
-  $wp_customize->add_setting( 'copyright_name', array(
+  $wp_customize->add_setting( 'bootcms_copyright_name', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_text_field',
   ) );
-  $wp_customize->add_control( 'copyright_name', array(
+  $wp_customize->add_control( 'bootcms_copyright_name', array(
 	'label'    => __( 'Copyright Name', 'bootcms' ),
 	'section'  => 'title_tagline',
 	'type'     => 'text',
 	'priority' => 80,
   ) );
 // Copyright Notice
-  $wp_customize->add_setting( 'copyright_notice', array(
+  $wp_customize->add_setting( 'bootcms_copyright_notice', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_text_field',
   ) );
-  $wp_customize->add_control( 'copyright_notice', array(
+  $wp_customize->add_control( 'bootcms_copyright_notice', array(
 	'label'    => __( 'Copyright Notice', 'bootcms' ),
 	'section'  => 'title_tagline',
 	'type'     => 'text',
@@ -76,193 +61,212 @@ add_action( 'customize_register', 'bootcms_customize_register' );
    Simple Styles Customizer
    ========================================================= */ 
 
-function simple_styles_customize_register( $wp_customize ) {
+function bootcms_global_simple_styles_customize_register( $wp_customize ) {
 // Simple Styles Section Title
-  $wp_customize->add_section( 'simple_styles', array(
-	'title'    => __( 'Simple Styles', 'bootcms' ),
+  $wp_customize->add_section( 'bootcms_global_simple_styles', array(
+	'title'    => __( 'Global Simple Styles', 'bootcms' ),
 	'priority' => 30,
   ) );
 // Widgets description
-  $wp_customize->add_setting( 'widgets_description', array(
+  $wp_customize->add_setting( 'bootcms_widgets_description', array(
     'default'           => ' ',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'widgets_description', array(
+  $wp_customize->add_control( 'bootcms_widgets_description', array(
 	'description' => __( 'To add content or HTML code to sections such as the <strong>Header, Navigation Bar</strong>, Homepage\'s <strong>Hero Unit, Right Sidebar</strong>, or <strong>Footer</strong>, add a widget to the corresponding sidebar in the <strong>Widgets</strong> section.<br>&nbsp;', 'bootcms' ),
     'type'        => 'hidden', 
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_global_simple_styles',
   ) ); 
 // Global section  ------------------
-  $wp_customize->add_setting( 'title_global_section', array(
+  $wp_customize->add_setting( 'bootcms_title_global_section', array(
     'default'           => ' ',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'title_global_section', array(
+  $wp_customize->add_control( 'bootcms_title_global_section', array(
   	'label'       => __( 'GLOBAL SECTION', 'bootcms' ),
 	'description' => __( 'These settings apply to all frameworks.<br>&nbsp;', 'bootcms' ),
     'type'        => 'hidden', 
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_global_simple_styles',
   ) );
 // Body classes
-  $wp_customize->add_setting( 'body_tag_classes', array(
+  $wp_customize->add_setting( 'bootcms_body_tag_classes', array(
     'default'           => '',
     'sanitize_callback' => 'sanitize_text_field',
   ) );
-  $wp_customize->add_control( 'body_tag_classes', array(
-    'label'       => __( 'Body Classes - Global', 'bootcms' ),
+  $wp_customize->add_control( 'bootcms_body_tag_classes', array(
+    'label'       => __( 'Body Classes', 'bootcms' ),
     'description' => __( 'Add classes to the <strong>Body</strong> tag. Multiple classes can be separated by spaces. You can use classes from an installed CSS Framework, or define custom classes under the "Additional CSS" section.', 'bootcms' ),
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_global_simple_styles',
     'type'        => 'text',
   ) ); 
 // Top container classes
-  $wp_customize->add_setting( 'top_container_classes', array(
+  $wp_customize->add_setting( 'bootcms_top_container_classes', array(
     'default'           => '',
     'sanitize_callback' => 'sanitize_text_field',
   ) );
-  $wp_customize->add_control( 'top_container_classes', array(
-    'label'       => __( 'Top Container - Framework Classes', 'bootcms' ),
+  $wp_customize->add_control( 'bootcms_top_container_classes', array(
+    'label'       => __( 'Top Container Classes', 'bootcms' ),
     'description' => __( 'Add classes to the <strong>Top Container (div)</strong> tag. Multiple classes can be separated by spaces. You can use classes from an installed CSS Framework, or define custom classes under the "Additional CSS" section.', 'bootcms' ),
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_global_simple_styles',
     'type'        => 'text',
   ) ); 
 // Header's description
-  $wp_customize->add_setting( 'header_description', array(
+  $wp_customize->add_setting( 'bootcms_header_description', array(
     'default'           => ' ',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'header_description', array(
-	'label'       => __( 'Header Section - Global', 'bootcms' ),
-	'description' => __( 'By default, the Header content includes the <strong>Site Title</strong> in an "h1" tag, with the <strong>Site Tagline</strong> displayed underneath in a "small" tag as part of the "h1". There is also a <strong>Right Sidebar</strong> where widgets can be used to add content and HTML code. To replace the default Header layout, add a widget to the <strong>Custom Header Sidebar</strong>.<br>&nbsp;', 'bootcms' ),
+  $wp_customize->add_control( 'bootcms_header_description', array(
+	'label'       => __( 'Header Section', 'bootcms' ),
+	'description' => __( 'By default, the Header content includes the <strong>Site Title</strong> in an "h1" tag, with the <strong>Site Tagline</strong> displayed underneath in a "small" tag as part of the "h1". There is also a <strong>Header Right Sidebar</strong> where widgets can be used to add content and HTML code. To replace the default Header layout, add a widget to the <strong>Custom Header</strong> sidebar.<br>&nbsp;<br>Alternatively, use the WordPress <strong>Header Image</strong> section in the Customizer to add a "Header Image". This replaces the existing header content while retaining the option to use the <strong>Header Right Sidebar</strong> to add content and HTML code to the header.<br>&nbsp;', 'bootcms' ),
     'type'        => 'hidden', 
-    'section'     => 'simple_styles',
-  ) );  
-// Header classes
-  $wp_customize->add_setting( 'header_tag_classes', array(
-    'default'           => '',
-    'sanitize_callback' => 'sanitize_text_field',
-  ) );
-  $wp_customize->add_control( 'header_tag_classes', array(
-    'label'       => __( 'Header Classes - Global', 'bootcms' ),
-    'description' => __( 'Add classes to the <strong>Header</strong> tag. Multiple classes can be separated by spaces. You can use classes from an installed CSS Framework, or define custom classes under the "Additional CSS" section.', 'bootcms' ),
-    'section'     => 'simple_styles',
-    'type'        => 'text',
-  ) );  
+    'section'     => 'bootcms_global_simple_styles',
+  ) ); 
 // Header Image
-  $wp_customize->add_setting( 'header_image', array(
+  $wp_customize->add_setting( 'bootcms_header_image', array(
 	'default'           => '',
 	'sanitize_callback' => 'absint',
   ) );
   $wp_customize->add_control(
 	new WP_Customize_Media_Control(
 	  $wp_customize,
-	  'header_image',
+	  'bootcms_header_image',
 	  array(
-		'label'       => __( 'Header Image - Global', 'bootcms' ),
-		'section'     => 'simple_styles',
+		'label'       => __( 'Theme Header Image', 'bootcms' ),
+		'section'     => 'bootcms_global_simple_styles',
 		'mime_type'   => 'image',
-		'description' => __( 'Upload an image for the header. The image layout is adjusted automatically: near-square images appear on the left with the title and tagline on the right, while wide rectangular images appear above the title and tagline.', 'bootcms' ),
+		'description' => __( 'Upload an image for the header. (<b>Note</b>: This is not the WordPress Header Image). With this image, the <strong>layout is adjusted automatically</strong>: <strong>near-square</strong> images appear on the left with the title and tagline on the right, while <strong>wide rectangular</strong> images appear above the title and tagline. If the image in the "<u>Header Image</u>" section is used, this image is disabled.', 'bootcms' ),
 	  )
+  ) );    
+// Header classes
+  $wp_customize->add_setting( 'bootcms_header_tag_classes', array(
+    'default'           => '',
+    'sanitize_callback' => 'sanitize_text_field',
+  ) );
+  $wp_customize->add_control( 'bootcms_header_tag_classes', array(
+    'label'       => __( 'Header Classes', 'bootcms' ),
+    'description' => __( 'Add classes to the <strong>Header</strong> tag. Multiple classes can be separated by spaces. You can use classes from an installed CSS Framework, or define custom classes under the "Additional CSS" section.', 'bootcms' ),
+    'section'     => 'bootcms_global_simple_styles',
+    'type'        => 'text',
   ) );  
 // Logo Image
-  $wp_customize->add_setting( 'title_bootcms_logo', array(
+  $wp_customize->add_setting( 'bootcms_title_logo', array(
     'default'           => ' ',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'title_bootcms_logo', array(
-  	'label'       => __( 'Display the Logo - Global', 'bootcms' ),
+  $wp_customize->add_control( 'bootcms_title_logo', array(
+  	'label'       => __( 'Display the Logo', 'bootcms' ),
 	'description' => __( 'Upload the logo in the <strong>Site Identity</strong> section.', 'bootcms' ),
     'type'        => 'hidden', 
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_global_simple_styles',
   ) );
   $wp_customize->add_setting( 'bootcms_logo_image', array(
 	'default'           => false,
 	'sanitize_callback' => 'wp_validate_boolean',
   ) );
   $wp_customize->add_control( 'bootcms_logo_image', array(
-	'section'  => 'simple_styles',
+	'section'  => 'bootcms_global_simple_styles',
 	'type'     => 'checkbox',
-	'label'    => __( 'Display the Logo in the header instead of the Header Image.', 'bootcms' ),
+	'label'    => __( 'Display the Logo in the header instead of the Theme Header Image.', 'bootcms' ),
   ) );
-  $wp_customize->add_setting( 'footer_logo_image', array(
+  $wp_customize->add_setting( 'bootcms_footer_logo_image', array(
 	'default'           => false,
 	'sanitize_callback' => 'wp_validate_boolean',
   ) );
-  $wp_customize->add_control( 'footer_logo_image', array(
-	'section'  => 'simple_styles',
+  $wp_customize->add_control( 'bootcms_footer_logo_image', array(
+	'section'  => 'bootcms_global_simple_styles',
 	'type'     => 'checkbox',
 	'label'    => __( 'Display the Logo in the footer.', 'bootcms' ),
   ) );  
 // Navbar Menu
-  $navbar_status = is_active_sidebar( 'customised_nav_menu' )
+  $navbar_status = is_active_sidebar( 'bootcms_customised_nav_menu' )
 	? __( '<span class="framework-nav-text">Widget navigation menu is enabled. The <strong>Customised Nav Menu</strong> widget can be used with any supported framework menu or as a custom menu. The Nav tag is already included as a wrapper, just add classes below.</span>', 'bootcms' )
-	: __( '<span class="bootcms-nav-text"><strong>WordPress Menu</strong> is currently used for the main navigation bar. <br>&nbsp;<br>Add a widget to the <strong>Customised Nav Menu</strong> widget area when a custom navigation menu or framework-specific menu needs to be <u>hard-coded</u>.
+	: __( '<span class="bootcms-nav-text"><strong>WordPress Menu</strong> is currently enabled for the main navigation bar. <br>&nbsp;<br>Add a HTML widget to the <strong>Customised Nav Menu</strong> widget area when a custom navigation menu or framework-specific menu needs to be <u>hard-coded</u>.
 </span>', 'bootcms' );
-  $wp_customize->add_setting( 'navbar_info', array(
+  $wp_customize->add_setting( 'bootcms_navbar_info', array(
     'default'           => ' ',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'navbar_info', array(
-	'label'       => __( 'Navigation Menu - Global', 'bootcms' ),  
-	'section'     => 'simple_styles',
+  $wp_customize->add_control( 'bootcms_navbar_info', array(
+	'label'       => __( 'Navigation Menu', 'bootcms' ),  
+	'section'     => 'bootcms_global_simple_styles',
 	'type'        => 'hidden',
 	'description' => $navbar_status,
   ) ); 
 // Nav tag classes
-  $wp_customize->add_setting( 'nav_tag_classes', array(
+  $wp_customize->add_setting( 'bootcms_nav_tag_classes', array(
     'default'           => '',
     'sanitize_callback' => 'sanitize_text_field',
   ) );
-  $wp_customize->add_control( 'nav_tag_classes', array(
-    'label'       => __( 'Nav Tag Classes - Global', 'bootcms' ),
+  $wp_customize->add_control( 'bootcms_nav_tag_classes', array(
+    'label'       => __( 'Nav Tag Classes', 'bootcms' ),
     'description' => __( 'Add, remove or replace CSS classes for the <strong>Nav</strong> tag. Multiple classes can be separated by spaces. You can use classes from an installed CSS Framework, or define custom classes under the "Additional CSS" section.', 'bootcms' ),
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_global_simple_styles',
     'type'        => 'text',
   ) );
 // Main Tag Classes
-  $wp_customize->add_setting( 'main_tag_classes', array(
+  $wp_customize->add_setting( 'bootcms_main_tag_classes', array(
     'default'           => '',
     'sanitize_callback' => 'sanitize_text_field',
   ) );
-  $wp_customize->add_control( 'main_tag_classes', array(
-    'label'       => __( '"Main" Tag Classes - Global', 'bootcms' ),
+  $wp_customize->add_control( 'bootcms_main_tag_classes', array(
+    'label'       => __( '"Main" Tag Classes', 'bootcms' ),
     'description' => __( 'Add, remove or replace CSS classes for the "Main" tag. Multiple classes can be separated by spaces. You can define custom classes to use here under "Additional CSS" in Theme Customise.', 'bootcms' ),
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_global_simple_styles',
     'type'        => 'text',
   ) ); 
 // Footer's description
-  $wp_customize->add_setting( 'footer_description', array(
+  $wp_customize->add_setting( 'bootcms_footer_description', array(
     'default'           => ' ',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'footer_description', array(
-	'label'       => __( 'Footer Section - Global', 'bootcms' ),
-	'description' => __( 'By default, the Footer includes two sections: "<strong>Main</strong>" and the  "<strong>Sidebar</strong>" on the right. Use widgets to add content and HTML code. It also includes a bottom section that displays copyright information, which is not editable. To replace the Footer\'s default layout, add a widget to the "<strong>Custom Footer Sidebar</strong>".', 'bootcms' ),
+  $wp_customize->add_control( 'bootcms_footer_description', array(
+	'label'       => __( 'Footer Section', 'bootcms' ),
+	'description' => __( 'By default, the Footer includes three sections: A "<strong>Left</strong>" sidebar, a "<strong>Main</strong>" and the  "<strong>Right</strong>" sidebar. Use widgets to add content and HTML code. It also includes a bottom section that displays copyright information, which is not editable. To replace the Footer\'s default layout, add a widget to the "<strong>Custom Footer</strong> sidebar".', 'bootcms' ),
     'type'        => 'hidden', 
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_global_simple_styles',
   ) );
 // Body classes
-  $wp_customize->add_setting( 'footer_tag_classes', array(
+  $wp_customize->add_setting( 'bootcms_footer_tag_classes', array(
     'default'           => '',
     'sanitize_callback' => 'sanitize_text_field',
   ) );
-  $wp_customize->add_control( 'footer_tag_classes', array(
-    'label'       => __( 'Footer Classes - Global', 'bootcms' ),
+  $wp_customize->add_control( 'bootcms_footer_tag_classes', array(
+    'label'       => __( 'Footer Classes', 'bootcms' ),
     'description' => __( 'Add classes to the <strong>Footer</strong> tag. Multiple classes can be separated by spaces. You can use classes from an installed CSS Framework, or define custom classes under the "Additional CSS" section.', 'bootcms' ),
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_global_simple_styles',
     'type'        => 'text',
   ) );  
-/** 
-  * BootCMS section ------------------ 
-**/
-  $wp_customize->add_setting( 'title_bootcms_section', array(
+}
+add_action( 'customize_register', 'bootcms_global_simple_styles_customize_register' );  
+  
+function bootcms_simple_styles_customize_register( $wp_customize ) {
+// Simple Styles Section Title
+  $wp_customize->add_section( 'bootcms_simple_styles', array(
+	'title'    => __( 'BootCMS Simple Styles', 'bootcms' ),
+	'priority' => 30,
+  ) );
+// Widgets description
+  $wp_customize->add_setting( 'bootcms_framework_widgets_description', array(
     'default'           => ' ',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'title_bootcms_section', array(
-  	'label'       => __( 'BOOTCMS SECTION', 'bootcms' ),
+  $wp_customize->add_control( 'bootcms_framework_widgets_description', array(
+	'description' => __( 'To add content or HTML code to sections such as the <strong>Header, Navigation Bar</strong>, Homepage\'s <strong>Hero Unit, Right Sidebar</strong>, or <strong>Footer</strong>, add a widget to the corresponding sidebar in the <strong>Widgets</strong> section.<br>&nbsp;', 'bootcms' ),
+    'type'        => 'hidden', 
+    'section'     => 'bootcms_simple_styles',
+  ) );   
+/** 
+  * BootCMS section ------------------ 
+**/
+  $wp_customize->add_setting( 'bootcms_title_section', array(
+    'default'           => ' ',
+    'sanitize_callback' => 'sanitize_key',
+  ) );
+  $wp_customize->add_control( 'bootcms_title_section', array(
+  	'label'       => __( 'BOOTCMS FRAMEWORK SECTION', 'bootcms' ),
 	'description' => __( 'These settings apply to BootCMS framework.<br>&nbsp;', 'bootcms' ),
     'type'        => 'hidden', 
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_simple_styles',
   ) ); 
 /*** Top Container ***/
   $wp_customize->add_setting( 'bootcms_top_container_type', array(
@@ -270,50 +274,50 @@ function simple_styles_customize_register( $wp_customize ) {
     'sanitize_callback' => 'sanitize_key',
   ) );
   $wp_customize->add_control( 'bootcms_top_container_type', array(
-    'label'   => __( 'Top Container - BootCMS Classes', 'bootcms' ),
-    'section' => 'simple_styles',
+    'label'   => __( 'BootCMS Top Container', 'bootcms' ),
+    'section' => 'bootcms_simple_styles',
     'type'    => 'radio',
     'choices' => array(
 		'bootcms-container-fluid' => __( 'Fluid Container (always 100% wide)', 'bootcms' ),
         'bootcms-container'       => __( 'Container with Breakpoints', 'bootcms' ),
     ),
   ) );
-  $wp_customize->add_setting( 'container_description', array(
+  $wp_customize->add_setting( 'bootcms_container_description', array(
     'default'           => ' ',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'container_description', array(
+  $wp_customize->add_control( 'bootcms_container_description', array(
     'type'        => 'hidden', 
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_simple_styles',
     'description' => __( 'Breakpoints are at: 576px, 768px, 992px, 1200px and 1400px. <br>&nbsp;', 'bootcms' ), 
   ) );
 /*** Header ***/
 // Header Text Color
-  $wp_customize->add_setting( 'header_text_color', array(
+  $wp_customize->add_setting( 'bootcms_header_text_color', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control(
 	new WP_Customize_Color_Control(
 	  $wp_customize,
-	  'header_text_color',
+	  'bootcms_header_text_color',
 	  array(
 		'label'   => __( 'BootCMS Header Text Color', 'bootcms' ),
-		'section' => 'simple_styles',
+		'section' => 'bootcms_simple_styles',
 	  )
   ) );  
 // Header Background Color
-  $wp_customize->add_setting( 'header_background_color', array(
+  $wp_customize->add_setting( 'bootcms_header_background_color', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control(
 	new WP_Customize_Color_Control(
 	  $wp_customize,
-	  'header_background_color',
+	  'bootcms_header_background_color',
 	  array(
 		'label'   => __( 'BootCMS Header Background Color', 'bootcms' ),
-		'section' => 'simple_styles',
+		'section' => 'bootcms_simple_styles',
 	  )
 	) );
 // Site Title / Tagline Position
@@ -323,7 +327,7 @@ function simple_styles_customize_register( $wp_customize ) {
   ) );
   $wp_customize->add_control( 'bootcms_title_tagline_position', array(
     'label'   => __( 'BootCMS Title & Tagline Position', 'bootcms' ),
-    'section' => 'simple_styles',
+    'section' => 'bootcms_simple_styles',
     'type'    => 'radio',
     'choices' => array(
 		'bootcms-title-left'   => __( 'Left (default)', 'bootcms' ),
@@ -332,57 +336,57 @@ function simple_styles_customize_register( $wp_customize ) {
     ),
   ) );  
 // Header Image as Background
-  $wp_customize->add_setting( 'title_header_image', array(
+  $wp_customize->add_setting( 'bootcms_title_header_image', array(
     'default'           => ' ',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'title_header_image', array(
+  $wp_customize->add_control( 'bootcms_title_header_image', array(
   	'label'       => __( 'Use Header Image as background', 'bootcms' ),
     'type'        => 'hidden', 
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_simple_styles',
   ) ); 
-  $wp_customize->add_setting( 'header_image_background', array(
+  $wp_customize->add_setting( 'bootcms_header_image_background', array(
 	'default'           => false,
 	'sanitize_callback' => 'wp_validate_boolean',
   ) );
-  $wp_customize->add_control( 'header_image_background', array(
+  $wp_customize->add_control( 'bootcms_header_image_background', array(
 	'label'   => __( 'BootCMS Header Image as Background', 'bootcms' ),
-	'section' => 'simple_styles',
+	'section' => 'bootcms_simple_styles',
 	'type'    => 'checkbox',
   ) );
 /*** Navigation Bar **/
 // Navbar Text Color
-  $wp_customize->add_setting( 'navbar_text_color', array(
+  $wp_customize->add_setting( 'bootcms_navbar_text_color', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control( new WP_Customize_Color_Control(
 	  $wp_customize,
-	  'navbar_text_color', array(
+	  'bootcms_navbar_text_color', array(
 		'label'   => __( 'BootCMS Navbar Text Color', 'bootcms' ),
-		'section' => 'simple_styles', 
+		'section' => 'bootcms_simple_styles', 
 	  )
 	) );
 // Navbar Background Color
-  $wp_customize->add_setting( 'navbar_background_color', array(
+  $wp_customize->add_setting( 'bootcms_navbar_background_color', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control( new WP_Customize_Color_Control(
 	  $wp_customize,
-	  'navbar_background_color', array(
+	  'bootcms_navbar_background_color', array(
 		'label'   => __( 'BootCMS Navbar Background Color', 'bootcms' ),
-		'section' => 'simple_styles', 
+		'section' => 'bootcms_simple_styles', 
 	  )
     ) ); 
 // BootCMS Nav position styles 
-  $wp_customize->add_setting( 'navbar_position_choice', array(
+  $wp_customize->add_setting( 'bootcms_navbar_position_choice', array(
     'default'           => 'placed-normal',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'navbar_position_choice', array(
+  $wp_customize->add_control( 'bootcms_navbar_position_choice', array(
 	'label'   => __( 'BootCMS Navbar Position Styles', 'bootcms' ),  
-    'section' => 'simple_styles',
+    'section' => 'bootcms_simple_styles',
     'type'    => 'radio', 
     'choices' => array(
 	  'placed-normal' => __( 'Placed after Header', 'bootcms' ),	
@@ -392,13 +396,13 @@ function simple_styles_customize_register( $wp_customize ) {
     ),
   ) );
 // BootCMS Nav Horizontal Position
-  $wp_customize->add_setting( 'navbar_horizontal_position', array(
+  $wp_customize->add_setting( 'bootcms_navbar_horizontal_position', array(
     'default'           => 'bootcms-navbar-left',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'navbar_horizontal_position', array(
+  $wp_customize->add_control( 'bootcms_navbar_horizontal_position', array(
     'label'   => __( 'BootCMS Nav Tag Horizontal Position', 'bootcms' ),
-    'section' => 'simple_styles',
+    'section' => 'bootcms_simple_styles',
     'type'    => 'radio',
     'choices' => array(
 		'bootcms-navbar-left'   => __( 'Left (default)', 'bootcms' ),
@@ -408,90 +412,90 @@ function simple_styles_customize_register( $wp_customize ) {
   ) );   
 /*** Main Section ***/
 // Main Text Color
-  $wp_customize->add_setting( 'main_text_color', array(
+  $wp_customize->add_setting( 'bootcms_main_text_color', array(
         'default'           => '',
         'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control( new WP_Customize_Color_Control(
 	  $wp_customize,
-	  'main_text_color', array(
+	  'bootcms_main_text_color', array(
 		'label'   => __( 'BootCMS Main Content Text Color', 'bootcms' ),
-		'section' => 'simple_styles', 
+		'section' => 'bootcms_simple_styles', 
 	  )
 	) );
 // Main Background Color
-  $wp_customize->add_setting( 'main_background_color', array(
+  $wp_customize->add_setting( 'bootcms_main_background_color', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control( new WP_Customize_Color_Control(
 	  $wp_customize,
-	  'main_background_color', array(
+	  'bootcms_main_background_color', array(
 		'label'   => __( 'BootCMS Main Content Background Color', 'bootcms' ),
-		'section' => 'simple_styles', 
+		'section' => 'bootcms_simple_styles', 
 	  )
 	) );
 // Main Content Background Image
-  $wp_customize->add_setting( 'main_background_image', array(
+  $wp_customize->add_setting( 'bootcms_main_background_image', array(
 	'default'           => '',
 	'sanitize_callback' => 'absint',
   ) );
   $wp_customize->add_control( new WP_Customize_Media_Control(
 	  $wp_customize,
-	  'main_background_image', array(
+	  'bootcms_main_background_image', array(
 		'label'       => __( 'BootCMS Main Content Background Image', 'bootcms' ),
-		'section'     => 'simple_styles',
+		'section'     => 'bootcms_simple_styles',
 		'mime_type'   => 'image',
 		'description' => __( 'Upload a background image for the main section.', 'bootcms' ),
 	  )
 	) );
 // Main Background Image as Watermark
-  $wp_customize->add_setting( 'main_background_watermark', array(
+  $wp_customize->add_setting( 'bootcms_main_background_watermark', array(
 	'default'           => false,
 	'sanitize_callback' => 'wp_validate_boolean',
   ) );
-  $wp_customize->add_control( 'main_background_watermark', array(
+  $wp_customize->add_control( 'bootcms_main_background_watermark', array(
 	'label'   => __( 'Background Image as Watermark', 'bootcms' ),
-	'section' => 'simple_styles',
+	'section' => 'bootcms_simple_styles',
 	'type'    => 'checkbox', 
   ) );
 /*** Aside Right Sidebar ***/
 // Aside Text Color
-  $wp_customize->add_setting( 'aside_text_color', array(
+  $wp_customize->add_setting( 'bootcms_aside_text_color', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control( new WP_Customize_Color_Control(
 	  $wp_customize,
-	  'aside_text_color',
+	  'bootcms_aside_text_color',
 	  array(
 		'label'   => __( 'BootCMS Right Sidebar Text Color', 'bootcms' ),
-		'section' => 'simple_styles',
+		'section' => 'bootcms_simple_styles',
 	  )
 	) );
 // Aside Background Color
-  $wp_customize->add_setting( 'aside_background_color', array(
+  $wp_customize->add_setting( 'bootcms_aside_background_color', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control(
 	new WP_Customize_Color_Control(
 	  $wp_customize,
-	  'aside_background_color',
+	  'bootcms_aside_background_color',
 	  array(
 		'label'   => __( 'BootCMS Right Sidebar Background Color', 'bootcms' ),
-		'section' => 'simple_styles',
+		'section' => 'bootcms_simple_styles',
 	  )
   ) );
 // Right Sidebar Width
-  $wp_customize->add_setting( 'right_sidebar_width', array(
+  $wp_customize->add_setting( 'bootcms_right_sidebar_width', array(
     'default'           => '25',
     'sanitize_callback' => 'sanitize_text_field',
   ) );
-  $wp_customize->add_control( 'right_sidebar_width', array(
+  $wp_customize->add_control( 'bootcms_right_sidebar_width', array(
     'type'        => 'select',
     'label'       => __( 'BootCMS Right Sidebar Width', 'bootcms' ),
-    'section'     => 'simple_styles',
+    'section'     => 'bootcms_simple_styles',
     'choices'     => array(
       '50' => '50%',
       '40' => '40%',
@@ -505,85 +509,85 @@ function simple_styles_customize_register( $wp_customize ) {
   ) );
 /*** Footer ***/
 // Footer Text Color
-  $wp_customize->add_setting( 'footer_text_color', array(
+  $wp_customize->add_setting( 'bootcms_footer_text_color', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control(
 	new WP_Customize_Color_Control(
 	  $wp_customize,
-	  'footer_text_color',
+	  'bootcms_footer_text_color',
 	  array(
 		'label'   => __( 'BootCMS Footer Text Color', 'bootcms' ),
-		'section' => 'simple_styles',
+		'section' => 'bootcms_simple_styles',
 	  )
 	)
   );
 // Footer Background Color
-  $wp_customize->add_setting( 'footer_background_color', array(
+  $wp_customize->add_setting( 'bootcms_footer_background_color', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control(
 	new WP_Customize_Color_Control(
 	  $wp_customize,
-	  'footer_background_color',
+	  'bootcms_footer_background_color',
 	  array(
 		'label'   => __( 'BootCMS Footer Background Color', 'bootcms' ),
-		'section' => 'simple_styles',
+		'section' => 'bootcms_simple_styles',
 	  )
 	)
   );
 /*** Page Backgrounds ***/
 // Page Background Color
-  $wp_customize->add_setting( 'page_background_color', array(
+  $wp_customize->add_setting( 'bootcms_page_background_color', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control(
 	new WP_Customize_Color_Control(
 	  $wp_customize,
-	  'page_background_color',
+	  'bootcms_page_background_color',
 	  array(
 		'label'   => __( 'BootCMS Page Background Color', 'bootcms' ),
-		'section' => 'simple_styles',
+		'section' => 'bootcms_simple_styles',
 	  )
 	)
   );
 // Page Background Image
-  $wp_customize->add_setting( 'page_background_image', array(
+  $wp_customize->add_setting( 'bootcms_page_background_image', array(
 	'default'           => '',
 	'sanitize_callback' => 'absint',
   ) );
   $wp_customize->add_control(
 	new WP_Customize_Media_Control(
 	  $wp_customize,
-	  'page_background_image',
+	  'bootcms_page_background_image',
 	  array(
 		'label'       => __( 'BootCMS Page Background Image', 'bootcms' ),
-		'section'     => 'simple_styles',
+		'section'     => 'bootcms_simple_styles',
 		'mime_type'   => 'image',
 		'description' => __( 'Upload a background image for the page.', 'bootcms' ),
 	  )
 	)
   );
 // Page Background Image Tiles
-  $wp_customize->add_setting( 'page_background_tiles', array(
+  $wp_customize->add_setting( 'bootcms_page_background_tiles', array(
 	'default'           => false,
 	'sanitize_callback' => 'wp_validate_boolean',
   ) );
-  $wp_customize->add_control( 'page_background_tiles', array(
+  $wp_customize->add_control( 'bootcms_page_background_tiles', array(
 	'label'   => __( 'Enable Image as Tiles', 'bootcms' ),
-	'section' => 'simple_styles',
+	'section' => 'bootcms_simple_styles',
 	'type'    => 'checkbox', 
   ) );
 // Page Background Tiles Position
-  $wp_customize->add_setting( 'background_tiles_position', array(
+  $wp_customize->add_setting( 'bootcms_background_tiles_position', array(
     'default'           => 'top-left',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'background_tiles_position', array(
-    'section' => 'simple_styles',
+  $wp_customize->add_control( 'bootcms_background_tiles_position', array(
+    'section' => 'bootcms_simple_styles',
     'type'    => 'radio',
 	'description' => __( 'Background tiles starting position:', 'bootcms' ),
     'choices' => array(
@@ -592,22 +596,22 @@ function simple_styles_customize_register( $wp_customize ) {
     ),
   ) );
 }
-add_action( 'customize_register', 'simple_styles_customize_register' );
+add_action( 'customize_register', 'bootcms_simple_styles_customize_register' );
 
 /* =========================================================
    Advanced Settings Customizer
    ========================================================= */ 
    
-function advanced_settings_customize_register( $wp_customize ) {
+function bootcms_advanced_settings_customize_register( $wp_customize ) {
   $wp_customize->add_section( 'bootcms_advanced_settings', array(
 	'title'    => __( 'Advanced Settings', 'bootcms' ),
 	'priority' => 30,
   ) );
-  $wp_customize->add_setting( 'js_support', array(
+  $wp_customize->add_setting( 'bootcms_js_support', array(
     'default'           => ' ',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'js_support', array(
+  $wp_customize->add_control( 'bootcms_js_support', array(
 	'label'   => __( 'JS Libraries & Frameworks', 'bootcms' ),  
 	'section'     => 'bootcms_advanced_settings',
 	'type'        => 'hidden',
@@ -717,12 +721,12 @@ function advanced_settings_customize_register( $wp_customize ) {
 	},
   ) );
 /* disable block support and emoji */
-  $wp_customize->add_setting( 'wp_modules', array(
+  $wp_customize->add_setting( 'bootcms_wp_modules', array(
     'default'           => ' ',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'wp_modules', array(
-	'label'   => __( 'Disable WP Modules', 'bootcms' ),  
+  $wp_customize->add_control( 'bootcms_wp_modules', array(
+	'label'   => __( 'Disable WordPress Modules', 'bootcms' ),  
 	'section'     => 'bootcms_advanced_settings',
 	'type'        => 'hidden',
   ) );
@@ -746,18 +750,18 @@ function advanced_settings_customize_register( $wp_customize ) {
 	'type'        => 'checkbox',
   ) );  
 // 404 page title
-  $wp_customize->add_setting( '404_page_title', array(
+  $wp_customize->add_setting( 'bootcms_404_page_title', array(
     'default'           => '',
     'sanitize_callback' => 'sanitize_text_field',
   ) );
-  $wp_customize->add_control( '404_page_title', array(
+  $wp_customize->add_control( 'bootcms_404_page_title', array(
     'label'       => __( '404 Page (Not Found) Title', 'bootcms' ),
     'description' => __( 'Enter a custom title', 'bootcms' ),
     'section'     => 'bootcms_advanced_settings',
     'type'        => 'text',
   ) );
 // 404 page text  
-  $wp_customize->add_setting( 'html_404_page', array(
+  $wp_customize->add_setting( 'bootcms_html_404_page', array(
     'default'           => '',
     'sanitize_callback' => function( $value ) {
 	  // Remove PHP tags. This field is for HTML only.
@@ -768,7 +772,7 @@ function advanced_settings_customize_register( $wp_customize ) {
 	  return wp_kses_post( $value );
     },
   ) );
-  $wp_customize->add_control( 'html_404_page', array(
+  $wp_customize->add_control( 'bootcms_html_404_page', array(
     'label'       => __( 'Custom HTML 404 content', 'bootcms' ),
     'description' => __( 'Enter custom HTML content for the Not Found page (404 error). Up to 500 characters.', 'bootcms' ),
     'section'     => 'bootcms_advanced_settings',
@@ -778,12 +782,12 @@ function advanced_settings_customize_register( $wp_customize ) {
     ),
   ) );
 // 404 page image
-  $wp_customize->add_setting( '404_page_image', array(
+  $wp_customize->add_setting( 'bootcms_404_page_image', array(
 	'default'           => '',
 	'sanitize_callback' => 'absint',
   ) );
   $wp_customize->add_control( new WP_Customize_Media_Control(
-	  $wp_customize, '404_page_image', array(
+	  $wp_customize, 'bootcms_404_page_image', array(
 		'label'       => __( '404 Page Image', 'bootcms' ),
 		'section'     => 'bootcms_advanced_settings',
 		'mime_type'   => 'image',
@@ -791,106 +795,106 @@ function advanced_settings_customize_register( $wp_customize ) {
 	  )
   ) );    
 }	
-add_action( 'customize_register', 'advanced_settings_customize_register' );
+add_action( 'customize_register', 'bootcms_advanced_settings_customize_register' );
 
 /* =========================================================
    Post Settings Customizer
    ========================================================= */ 
 
-function posts_customize_register( $wp_customize ) {
+function bootcms_posts_customize_register( $wp_customize ) {
   $wp_customize->add_section( 'bootcms_post_settings', array(
 	'title'    => __( 'Posts Settings', 'bootcms' ),
 	'priority' => 40,
   ) );
   // Copyright Name
-  $wp_customize->add_setting( 'posts_home_title', array(
+  $wp_customize->add_setting( 'bootcms_posts_home_title', array(
 	'default'           => '',
 	'sanitize_callback' => 'sanitize_text_field',
   ) );
-  $wp_customize->add_control( 'posts_home_title', array(
+  $wp_customize->add_control( 'bootcms_posts_home_title', array(
 	'label'       => __( 'Posts Homepage Title', 'bootcms' ),
 	'description' => __( 'Enter a title for the Posts Homepage to replace the default.', 'bootcms' ),
 	'section'     => 'bootcms_post_settings',
 	'type'        => 'text',
   ) );  
-  $wp_customize->add_setting( 'posts_meta_data', array(
+  $wp_customize->add_setting( 'bootcms_posts_meta_data', array(
     'default'           => ' ',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'posts_meta_data', array(
+  $wp_customize->add_control( 'bootcms_posts_meta_data', array(
  	'label'   => __( 'Post Metadata', 'bootcms' ),
 	'description' => __( 'Choose the ones to display.', 'bootcms' ),	
 	'section'     => 'bootcms_post_settings',
 	'type'        => 'hidden',
   ) );
-  $wp_customize->add_setting( 'published_date_post', array(
+  $wp_customize->add_setting( 'bootcms_published_date_post', array(
 	'default'           => true,
 	'sanitize_callback' => 'wp_validate_boolean',
   ) );
-  $wp_customize->add_control( 'published_date_post', array(
+  $wp_customize->add_control( 'bootcms_published_date_post', array(
 	'label'       => __( 'Published date', 'bootcms' ),
 	'section'     => 'bootcms_post_settings',
 	'type'        => 'checkbox',
   ) );
-  $wp_customize->add_setting( 'modified_date_post', array(
+  $wp_customize->add_setting( 'bootcms_modified_date_post', array(
 	'default'           => false,
 	'sanitize_callback' => 'wp_validate_boolean',
   ) );
-  $wp_customize->add_control( 'modified_date_post', array(
+  $wp_customize->add_control( 'bootcms_modified_date_post', array(
 	'label'       => __( 'Modified date', 'bootcms' ),
 	'section'     => 'bootcms_post_settings',
 	'type'        => 'checkbox',
   ) );
-  $wp_customize->add_setting( 'author_of_post', array(
+  $wp_customize->add_setting( 'bootcms_author_of_post', array(
 	'default'           => true,
 	'sanitize_callback' => 'wp_validate_boolean',
   ) );
-  $wp_customize->add_control( 'author_of_post', array(
+  $wp_customize->add_control( 'bootcms_author_of_post', array(
 	'label'       => __( 'Author', 'bootcms' ),
 	'section'     => 'bootcms_post_settings',
 	'type'        => 'checkbox',
   ) );
-  $wp_customize->add_setting( 'category_of_post', array(
+  $wp_customize->add_setting( 'bootcms_category_of_post', array(
 	'default'           => true,
 	'sanitize_callback' => 'wp_validate_boolean',
   ) );
-  $wp_customize->add_control( 'category_of_post', array(
+  $wp_customize->add_control( 'bootcms_category_of_post', array(
 	'label'       => __( 'Category', 'bootcms' ),
 	'section'     => 'bootcms_post_settings',
 	'type'        => 'checkbox',
   ) );
-  $wp_customize->add_setting( 'post_tags', array(
+  $wp_customize->add_setting( 'bootcms_post_tags', array(
 	'default'           => false,
 	'sanitize_callback' => 'wp_validate_boolean',
   ) );
-  $wp_customize->add_control( 'post_tags', array(
+  $wp_customize->add_control( 'bootcms_post_tags', array(
 	'label'       => __( 'Tags', 'bootcms' ),
 	'section'     => 'bootcms_post_settings',
 	'type'        => 'checkbox',
   ) );
-  $wp_customize->add_setting( 'comments_count', array(
+  $wp_customize->add_setting( 'bootcms_comments_count', array(
 	'default'           => false,
 	'sanitize_callback' => 'wp_validate_boolean',
   ) );
-  $wp_customize->add_control( 'comments_count', array(
+  $wp_customize->add_control( 'bootcms_comments_count', array(
 	'label'       => __( 'Comments count', 'bootcms' ),
 	'section'     => 'bootcms_post_settings',
 	'type'        => 'checkbox',
   ) );
-   $wp_customize->add_setting( 'discussion_status', array(
+   $wp_customize->add_setting( 'bootcms_discussion_status', array(
 	'default'           => false,
 	'sanitize_callback' => 'wp_validate_boolean',
   ) );
-  $wp_customize->add_control( 'discussion_status', array(
+  $wp_customize->add_control( 'bootcms_discussion_status', array(
 	'label'       => __( 'Discussion status', 'bootcms' ),
 	'section'     => 'bootcms_post_settings',
 	'type'        => 'checkbox',
   ) );
-  $wp_customize->add_setting( 'post_content_display', array(
+  $wp_customize->add_setting( 'bootcms_post_content_display', array(
     'default'           => 'excerpt',
     'sanitize_callback' => 'sanitize_key',
   ) );
-  $wp_customize->add_control( 'post_content_display', array(
+  $wp_customize->add_control( 'bootcms_post_content_display', array(
     'label'       => __( 'Post Content', 'bootcms' ),
     'description' => __( 'Choose whether the main <strong>Posts</strong> page and other pages listing posts display the full content or an excerpt.', 'bootcms' ),
     'section'     => 'bootcms_post_settings',
@@ -900,13 +904,13 @@ function posts_customize_register( $wp_customize ) {
       'excerpt' => __( 'Excerpt', 'bootcms' ),
     ),
   ) );
-  $wp_customize->add_setting( 'post_excerpt_length', array(
+  $wp_customize->add_setting( 'bootcms_post_excerpt_length', array(
     'default'           => 55,
     'sanitize_callback' => function( $value ) {
     return min( absint( $value ), 999 );
 	},
   ) );
-  $wp_customize->add_control( 'post_excerpt_length', array(
+  $wp_customize->add_control( 'bootcms_post_excerpt_length', array(
     'label'       => __( 'Auto Excerpt Length', 'bootcms' ),
     'description' => __( 'Set the maximum number of words used for WP automated excerpts. The maximum number accepted is 999, the default is 55.', 'bootcms' ),
     'section'     => 'bootcms_post_settings',
@@ -918,7 +922,7 @@ function posts_customize_register( $wp_customize ) {
 	  'placeholder' => '55',
     ),
   ) );
-  $wp_customize->add_setting( 'post_cta_html', array(
+  $wp_customize->add_setting( 'bootcms_post_cta_html', array(
     'default'           => '',
     'sanitize_callback' => function( $value ) {
 	  // Remove PHP tags. This field is for HTML only.
@@ -929,7 +933,7 @@ function posts_customize_register( $wp_customize ) {
 	  return wp_kses_post( $value );
     },
   ) );
-  $wp_customize->add_control( 'post_cta_html', array(
+  $wp_customize->add_control( 'bootcms_post_cta_html', array(
     'label'       => __( 'Call to Action code in Single Post', 'bootcms' ),
     'description' => __( 'Enter HTML/CSS/JS for the Call to Action area shown at the end of the content of a single post. Maximum 1500 characters.', 'bootcms' ),
     'section'     => 'bootcms_post_settings',
@@ -939,43 +943,44 @@ function posts_customize_register( $wp_customize ) {
     ),
   ) );
 }
-add_action( 'customize_register', 'posts_customize_register' );
+add_action( 'customize_register', 'bootcms_posts_customize_register' );
 
 /* =========================================================
    JavaScript Editing
    ========================================================= */ 
 
-function edit_javascript_register( $wp_customize ) {
+function bootcms_edit_javascript_register( $wp_customize ) {
   $wp_customize->add_section( 'bootcms_edit_javascript', array(
 	'title'    => __( 'Edit JavaScript', 'bootcms' ),
 	'priority' => 250,
   ) );
-  $wp_customize->add_setting( 'bootcms_large_html_editor', array(
+  $wp_customize->add_setting( 'bootcms_javascript_editor', array(
 	'default'           => '',
-	'sanitize_callback' => 'wp_kses_post',
+	'sanitize_callback' => '__return_empty_string',
   ) );
   $wp_customize->add_control(
 	new BootCMS_Large_Editor_Control(
-	  $wp_customize, 'bootcms_large_html_editor', array(
-			'label'       => __( 'Large HTML Editor', 'bootcms' ),
+	  $wp_customize, 'bootcms_javascript_editor', array(
+			'label'       => __( 'JavaScript Editor', 'bootcms' ),
 			'section'     => 'bootcms_edit_javascript',
-			'editor_mode' => 'javascript',
+			'editor_mode' => 'javascript-global',
 	  )
   ) );
 }
-add_action( 'customize_register', 'edit_javascript_register' );
+add_action( 'customize_register', 'bootcms_edit_javascript_register' );
 
 /* =========================================================
    Fonts in Customizer
    ========================================================= */ 
 
-function fonts_customize_register( $wp_customize ) {
+function bootcms_fonts_customize_register( $wp_customize ) {
   $wp_customize->add_section( 'bootcms_customizer_fonts', array(
 	'title'    => __( 'Fonts', 'bootcms' ),
 	'priority' => 888,
   ) );  
   $wp_customize->add_setting( 'bootcms_fonts_library', array(
     'type' => 'option',
+    'sanitize_callback' => 'sanitize_text_field',
   ) );
   $wp_customize->add_control(
     new BootCMS_Fonts_Library_Control(
@@ -986,7 +991,7 @@ function fonts_customize_register( $wp_customize ) {
       )
   ) ); 
 }
-add_action( 'customize_register', 'fonts_customize_register' );
+add_action( 'customize_register', 'bootcms_fonts_customize_register' );
 
 class BootCMS_Fonts_Library_Control extends WP_Customize_Control {
   public $type = 'bootcms_fonts_library';

@@ -1,20 +1,20 @@
-<!doctype html>
+ <!doctype html>
 <!--
  * WordPress classic theme
- * bootcms-help/theme-features.html 
- * @link https://github/...
+ * bootcms-help/features-scaffolding.html 
+ * @link https://github.com/netbuddy-net/BootCMS
  * @package bootcms
- * @since bootcms 2.0
+ * @since bootcms 2.1
  *
  * ========================================================
-   Help - Features & Scaffolding doc
+   BootCMS Help - Features & Scaffolding doc
    ========================================================= */
 -->
 <html lang="en">
 <head>
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
- <title>BootCMS | Theme & Appearance</title>
+ <title>BootCMS | Features & Scaffolding</title>
  <meta name="description" content=" ">
  <link rel="stylesheet" href="./help-styles.css"> 
 </head>
@@ -28,7 +28,7 @@
  <meta itemprop="dateModified" content=" ">
  <link itemprop="isPartOf" href=" "> 
 <header itemprop="hasPart" itemscope itemtype="https://schema.org/WPHeader">
-<h1>BootCMS Classic WP Theme v2.0<br>
+<h1>BootCMS Classic WP Theme v2.1<br>
 <small>Help Documents</small></h1>
 </header>
 
@@ -70,7 +70,7 @@ After creating a couple of posts and/or pages, the remaining configuration can b
 <dt>3. Customizer as the control centre
 <dd>Configuration of the scaffolding, styles and widgets takes place in the <strong>Customizer</strong>, with changes previewed live. For beginners, several controls are available, including tick boxes, radio options and other simple settings. More advanced users can customise the site further by editing <strong>widgets</strong> and placing them in the appropriate areas, allowing more complex setups.
 <dt>4. Frameworks & Libraries
-<dd>BootCMS provides the option to select from several <strong>CSS</strong> and <strong>JavaScript frameworks</strong> or <strong>libraries</strong> simply by using a control in customizer. The necessary framework files are automatically linked from their respective CDNs.
+<dd>BootCMS provides the option to select from several <strong>CSS</strong> and <strong>JavaScript frameworks</strong> or <strong>libraries</strong> simply by using a control in customizer. The necessary framework files are included with the theme.
 <dt>5. Content and presentation are separate
 <dd>Following the standards and guidelines of the <strong>W3C</strong>, BootCMS keeps content and presentation separate. The structure, behaviour and styling are implemented through the BootCMS tools and the Customizer, while content is added through the familiar WordPress <strong>Pages</strong> and <strong>Posts</strong>.
 </dl>
@@ -133,12 +133,18 @@ In WordPress's Customizer, BootCMS places all of its configuration tools.
 <dl>
 <dt>Site identity
 <dd>Settings related to the site's identity, such as the Site Title and Logo image.
-<dt>Simple styles
-<dd>BootCMS own section for settings relating to styling.
+<dt>Global Simple styles
+<dd>Styling and layout tools to assist with all available frameworks. 
+<dt>BootCMS Simple Styles
+<dd>BootCMS framework's styling and layout tools.
 <dt>Advanced Settings
 <dd>BootCMS own section for settings relating to the site's functionality.
 <dt>Posts settings
 <dd>BootCMS own section  for settings related to Posts.
+<dt>Header Image
+<dd>WordPress's built-in Header Image functionality.
+<dt>Body Background Image
+<dd>WordPress's built-in Background Image functionality, applied to the 'body' tag. 
 <dt>Menus
 <dd>The Menus and the tools used to build them are available here.
 <dt>Widgets
@@ -147,6 +153,10 @@ In WordPress's Customizer, BootCMS places all of its configuration tools.
 <dd>A few settings related to site's homepage.
 <dt>Additional CSS
 <dd>WordPress provides an easy way to add custom CSS styles.
+<dt>Edit JavScript
+<dd>BootCMS adds a utility for editing and adding short JavaScript snippets.
+<dt>Fonts
+<dd>Font selection and linking are currently not supported in the Customizer.
 <dt>Help
 <dd>BootCMS's section containing the Help documents.
 </dl>
@@ -196,6 +206,29 @@ A complete scaffolding includes several sidebars to provide maximum flexibility 
 </div>
 </details>
 </section>
+<section>
+<h3>Search</h3>
+<p>
+The search functionality for website pages and posts is ready to use. Visitors can use a form to search the entire website for words, including partial words.
+<details>
+<summary>Read more ...</summary>
+<p>
+Use "/" as the form action if the website is installed in the root directory. If WordPress is installed in a subdirectory, include the directory path in the action.
+<p>
+An example of a search form is provided below.
+<pre><code> &lt;form role="search" method="get" action="/"&gt;
+  &lt;label for="site-search"&gt;Search the website: &lt;/label&gt;
+  &lt;input
+    type="search"
+    id="site-search"
+    name="s"
+    placeholder="Enter search terms..."
+    required &gt; 
+  &lt;button type="submit"&gt;Search&lt;/button&gt;
+ &lt;/form&gt;</code></pre>
+
+</details>
+</section>
 
 <br>
 &nbsp;
@@ -212,24 +245,27 @@ A complete scaffolding includes several sidebars to provide maximum flexibility 
   <li><a href="./getting-started.html">Getting Started</a>
   <li>Features & Scaffolding
   <li><a href="./site-identity.html">Site Identity</a>
-  <li><a href="./global-styles.html">Simple Styles Global</a>
-  <li><a href="./bootcms-styles.html">Simple Styles BootCMS</a>
+  <li><a href="./global-styles.html">Global Simple Styles </a>
+  <li><a href="./bootcms-styles.html">BootCMS Simple Styles </a>
   <li><a href="./advanced-settings.html">Advanced Settings</a>
   <li><a href="./posts-settings.html">Posts Settings</a> 
+  <li><a href="./header-body-image.html">Header & Body B. Image</a>
   <li><a href="./menus.html">Menus</a> 
   <li><a href="./widgets.html">Widgets</a>
   <li><a href="./homepage-settings.html">Homepage Settings</a>
   <li><a href="./additional-css.html">Additional CSS</a>
+  <li><a href="./edit-javascript.html">Edit JavaScript</a>
   <li><a href="./lorem-ipsum.html">Lorem ipsum</a>
   <li><a href="#">------------------------------</a>
-  <li><a href="./large-html-editor.html">BootCMS Large HTML Editor</a>    
+  <li><a href="./large-html-editor.html">BootCMS Large Editor</a> 
+  <li><a href="./framework.html" target="_blank">BootCMS Framework</a>  
  </ul>
 </nav>
 
 <footer itemprop="hasPart" itemscope itemtype="https://schema.org/WPFooter">
 <p>
 Developed by NetBuddy.Net<br>
-&copy; 2014 - <script>document.write(new Date().getFullYear())</script> . <a href="https://netbuddy.net/" target="_blank">NetBuddy.Net</a> . <a href="https://opensource.org/license/MIT" target="_blank">MIT License</a>.
+&copy; 2014 - <script>document.write(new Date().getFullYear())</script> . <a href="https://netbuddy.net/" target="_blank">NetBuddy.Net</a>.
 </footer>
 </body>
 </html>

@@ -2,9 +2,9 @@
 /**
  * WordPress classic theme
  * header.php 
- * @link https://github/...
+ * @link https://github.com/netbuddy-net/BootCMS
  * @package bootcms
- * @since bootcms 2.0
+ * @since bootcms 2.1
  */
 ?>
 <!DOCTYPE html>
@@ -23,7 +23,7 @@
 <?php  wp_head(); ?>
 </head>
 
-<?php $body_tag_classes = get_theme_mod( 'body_tag_classes', '' ); ?>
+<?php $body_tag_classes = get_theme_mod( 'bootcms_body_tag_classes', '' ); ?>
 <body <?php body_class( $body_tag_classes ); ?> itemscope itemtype="https://schema.org/WebPage"><!-- closes in footer -->
 <?php wp_body_open(); ?>
 <?php $name = get_post_meta( get_the_ID(), 'name', true );
@@ -54,63 +54,96 @@
   if ( $dateModified ) : ?>
     <meta itemprop="dateModified" content="<?php echo esc_attr( $dateModified ); ?>">
 <?php endif; ?>
-  <link itemprop="isPartOf" href="<?php echo get_site_url(); ?>">
+  <link itemprop="isPartOf" href="<?php echo get_site_url(); ?>"> 
 <?php $bootcms_css_framework = get_theme_mod( 'bootcms_css_framework', 'bootcms' );
 $bootcms_top_container_type = get_theme_mod( 'bootcms_top_container_type', 'bootcms-container-fluid' ); 
-$container_tag_classes = get_theme_mod( 'top_container_classes', '' );
-if ( $bootcms_css_framework === 'bootcms' ){ $top_container_class = $bootcms_top_container_type; } else {
-if ( $container_tag_classes ) { $top_container_class = $container_tag_classes;} else {$top_container_class = $bootcms_top_container_type;
+$bootcms_container_tag_classes = get_theme_mod( 'bootcms_top_container_classes', '' );
+if ( $bootcms_css_framework === 'bootcms' ){ $bootcms_top_container_class = $bootcms_top_container_type; } else {
+if ( $bootcms_container_tag_classes ) { $bootcms_top_container_class = $bootcms_container_tag_classes;} else {$bootcms_top_container_class = $bootcms_top_container_type;
 }}?>
-<div id ="top-container" class="<?php echo esc_attr( $top_container_class ); ?>" ><!-- top container - closes in footer -->
-<?php $header_tag_classes = get_theme_mod( 'header_tag_classes', '' ); ?>
-<header <?php if ($header_tag_classes) : ?> class="<?php echo esc_attr( $header_tag_classes ); ?>"<?php endif; ?> itemprop="hasPart" itemscope itemtype="https://schema.org/WPHeader" >
-  <?php if ( is_active_sidebar( 'header-custom' ) ) : 
-	dynamic_sidebar( 'header-custom' ); ?>
-  <?php else :
-	$header_image_id = get_theme_mod( 'header_image', '' );
-	$header_image_background = get_theme_mod( 'header_image_background', false );
-	$hd_image_ratio = bootcms_header_image_ratio();
-	$bootcms_logo_exists = get_theme_mod( 'bootcms_logo', false );
-	$bootcms_logo_image = get_theme_mod( 'bootcms_logo_image', false );
-  if ($bootcms_logo_exists && $bootcms_logo_image) : 
- 	if (is_active_sidebar( 'header-sidebar' )){$header_class = 'image-left-sidebar';} else {$header_class = 'image-left-no-sidebar';}
-  	$logoalt = get_post_meta( $bootcms_logo_exists, '_wp_attachment_image_alt', true ); ?>
-  <div class="bootcms-header <?php echo esc_attr( $header_class ); ?>"><!-- header 1A -->
-	<div class="header-image">
-	  <img id="logo_img" src="<?php echo esc_url( wp_get_attachment_image_url( $bootcms_logo_exists, 'full' ) ); ?>" alt="<?php echo esc_attr( $logoalt ); ?>" title="<?php echo esc_attr( $logoalt ); ?>">
-	</div>
-  <?php else :
-	$header_class = bootcms_header_class($header_image_id, $header_image_background, $hd_image_ratio); ?>
-	<div class="bootcms-header <?php echo esc_attr( $header_class ); ?>"><!-- header 1A -->	
-	<?php $alt = get_post_meta( $header_image_id, '_wp_attachment_image_alt', true );
-	if ( $header_image_id && ! $header_image_background ) : ?>
-	<div class="header-image">
-	  <!-- <a href="<?php /* echo esc_url( home_url( '/' ) ); */ ?>"> -->
-	  <img id="header_img" src="<?php echo esc_url( wp_get_attachment_image_url( $header_image_id, 'full' ) ); ?>" alt="<?php echo esc_attr( $alt ); ?>" title="<?php echo esc_attr( $alt ); ?>">
-	</div>
-    <?php endif; ?> 
-  <?php endif; ?>
-	<div class="header-content">
-	<h1>
-	<?php   echo esc_html( get_bloginfo( 'name' ) . ' '); ?>
-	<?php if ( get_bloginfo( 'description' ) ) : ?>
-	  <br>
-	  <small><?php echo esc_html( get_bloginfo( 'description' ) ); ?></small>
-	<?php endif; ?>
-	</h1>
-	</div>
-	<?php if ( is_active_sidebar( 'header-sidebar' ) ) : ?>
+<div id ="top-container" class="<?php echo esc_attr( $bootcms_top_container_class ); ?>" ><!-- top container - closes in footer -->
+
+<?php $bootcms_header_tag_classes = get_theme_mod( 'bootcms_header_tag_classes', '' ); ?>
+<header <?php if ($bootcms_header_tag_classes) : ?> class="<?php echo esc_attr( $bootcms_header_tag_classes ); ?>"<?php endif; ?> itemprop="hasPart" itemscope itemtype="https://schema.org/WPHeader">
+  <?php if ( is_active_sidebar( 'header-custom' ) ) :
+    dynamic_sidebar( 'header-custom' );
+  else :
+    if ( get_header_image() ) : ?>
+      <div class="native-header"><!-- header wrapper -->
+	    <?php $bootcms_logo_exists = get_theme_mod( 'custom_logo', false );
+			  $bootcms_logo_image = get_theme_mod( 'bootcms_logo_image', false );
+		  if ( $bootcms_logo_exists && $bootcms_logo_image ) : ?>
+		  <div class="header-logo">
+          <?php $bootcms_logo = get_theme_mod( 'custom_logo', '' );
+		  echo wp_get_attachment_image(
+			$bootcms_logo, 'full', false, array(
+              'id'    => 'logo_img',
+              'title' => get_the_title( $bootcms_logo ),
+			) ); ?>		    
+		  </div>
+		  <?php endif; ?>
+		<div class="header-custom-image">
+          <figure class="native-header-image">
+			<?php the_header_image_tag(); ?>
+          </figure>
+		</div>
+    <?php else :
+      $header_image_id = get_theme_mod( 'bootcms_header_image', '' );
+      $header_image_background = get_theme_mod( 'bootcms_header_image_background', false );
+      $hd_image_ratio = bootcms_header_image_ratio();
+      $bootcms_logo_exists = get_theme_mod( 'custom_logo', false );
+      $bootcms_logo_image = get_theme_mod( 'bootcms_logo_image', false );
+      if ( $bootcms_logo_exists && $bootcms_logo_image ) :
+        if ( is_active_sidebar( 'header-sidebar' ) ) {
+          $header_class = 'image-left-sidebar';
+        } else {
+          $header_class = 'image-left-no-sidebar';
+        } ?>
+        <div class="bootcms-header <?php echo esc_attr( $header_class ); ?>"><!-- header wrapper -->
+          <div class="header-image">
+          <?php $bootcms_logo = get_theme_mod( 'custom_logo', '' );
+		  echo wp_get_attachment_image(
+			$bootcms_logo, 'full', false, array(
+              'id'    => 'logo_img',
+              'title' => get_the_title( $bootcms_logo ),
+			) ); ?>
+          </div>
+      <?php else :
+        $header_class = bootcms_header_class( $header_image_id, $header_image_background, $hd_image_ratio );
+      ?>
+        <div class="bootcms-header <?php echo esc_attr( $header_class ); ?>"><!-- header wrapper -->
+          <?php
+          $alt = get_post_meta( $header_image_id, '_wp_attachment_image_alt', true );
+          if ( $header_image_id && ! $header_image_background ) : ?>
+            <div class="header-image">
+              <img id="header_img" src="<?php echo esc_url( wp_get_attachment_image_url( $header_image_id, 'full' ) ); ?>" alt="<?php echo esc_attr( $alt ); ?>" title="<?php echo esc_attr( $alt ); ?>">
+            </div>
+          <?php endif; ?>
+      <?php endif; ?>
+        <div class="header-content">
+		  <?php if ( display_header_text() ) : ?>
+          <h1>
+            <?php echo esc_html( get_bloginfo( 'name' ) . ' ' ); ?>
+            <?php if ( get_bloginfo( 'description' ) ) : ?>
+              <br>
+              <small><?php echo esc_html( get_bloginfo( 'description' ) ); ?></small>
+            <?php endif; ?>
+          </h1>
+		  <?php endif; ?>
+        </div>
+    <?php endif; ?>
+    <?php if ( is_active_sidebar( 'header-sidebar' ) ) : ?>
       <div class="header-sidebar">
-		<?php dynamic_sidebar( 'header-sidebar' ); ?>
+        <?php dynamic_sidebar( 'header-sidebar' ); ?>
       </div>
-	<?php endif; ?>
-  </div><!-- / header 1A -->
+    <?php endif; ?>
+      </div><!-- / header wrapper -->
   <?php endif; ?>
 </header>
 
 <?php if ( has_nav_menu( 'primary' ) ) : ?> 
 <a href="#main" class="skip-link">Skip to content</a>
-<?php $nav_tag_classes = get_theme_mod( 'nav_tag_classes', '' );
+<?php $nav_tag_classes = get_theme_mod( 'bootcms_nav_tag_classes', '' );
   if ($nav_tag_classes) {
 	$nav_tag_class = $nav_tag_classes; } else { $nav_tag_class = 'bootcms-navbar';}  
   if ( is_active_sidebar( 'customised_nav_menu')) : ?>
@@ -139,15 +172,28 @@ if ( $container_tag_classes ) { $top_container_class = $container_tag_classes;} 
 		  </button>   
 		  <div class="collapse navbar-collapse" id="navbarNav">
 			<?php
-			$menu_args = array(
-			  'theme_location' => 'primary',
-			  'container'      => false,
-			  'menu_class'     => 'navbar-nav me-auto mr-auto my-2 my-lg-0',
-			  'fallback_cb'    => '__return_false',
-			  'depth'          => 2 );
 			if ( version_compare( $bootstrap_version, '5.0.0', '<' ) && $bootcms_css_framework !== 'bootswatch' ) {
-			  $menu_args['walker'] = new WP_Bootstrap_Navwalker(); }
-			wp_nav_menu( $menu_args );
+			  wp_nav_menu(
+				array(
+				  'theme_location' => 'primary',
+				  'container'      => false,
+				  'menu_class'     => 'navbar-nav me-auto mr-auto my-2 my-lg-0',
+				  'fallback_cb'    => '__return_false',
+				  'depth'          => 2,
+				  'walker'         => new WP_Bootstrap_Navwalker()
+				)
+			  );
+			} else {
+			  wp_nav_menu(
+				array(
+				  'theme_location' => 'primary',
+				  'container'      => false,
+				  'menu_class'     => 'navbar-nav me-auto mr-auto my-2 my-lg-0',
+				  'fallback_cb'    => '__return_false',
+				  'depth'          => 2
+				)
+			  );
+			}
 			?>
 		  </div>
 		</div>
@@ -242,6 +288,7 @@ if ( $container_tag_classes ) { $top_container_class = $container_tag_classes;} 
 	  <?php
 	  wp_nav_menu( array(
         'theme_location' => 'primary',
+		'container_class' => 'bootcms-menu-container',
 		'fallback_cb'    => false,
 	  ) );
 	  ?>

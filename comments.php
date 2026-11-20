@@ -2,9 +2,9 @@
 /** 
  * WordPress classic theme
  * comments.php
- * @link https://github/...
+ * @link https://github.com/netbuddy-net/BootCMS
  * @package BootCMS
- * @since 2.0
+ * @since 2.1
  */
 
   if ( post_password_required() ) {
@@ -17,7 +17,7 @@
 	<?php
 	printf(
 	  esc_html(
-		_n( 'One Comment', '%1$s Comments', get_comments_number(), 'bootcms' )
+		_n( '1 Comment', '%1$s Comments', get_comments_number(), 'bootcms' )
 	  ),
 	  number_format_i18n( get_comments_number() )
 	 );
@@ -46,5 +46,7 @@
 		<?php esc_html_e( 'Comments are closed.', 'bootcms' ); ?>
 	  </p>
 	<?php endif; ?>
-	<?php comment_form(); ?>
+	<?php comment_form( array(
+      'title_reply' => __( 'Leave a Comment', 'bootcms' ),
+	) ); ?>
   </div>

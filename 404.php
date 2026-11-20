@@ -2,9 +2,9 @@
 /**
  * WordPress classic theme
  * 404.php 
- * @link https://github/...
+ * @link https://github.com/netbuddy-net/BootCMS
  * @package bootcms
- * @since bootcms 2.0
+ * @since bootcms 2.1
  */
  
 get_header(); 
@@ -12,26 +12,26 @@ get_header();
 
 <div class="pages-main-section">
 <div class="section-wrapper">
-<?php $main_tag_classes = get_theme_mod( 'main_tag_classes', '' );
+<?php $main_tag_classes = get_theme_mod( 'bootcms_main_tag_classes', '' );
   if ( $main_tag_classes ) { $main_tag_class = $main_tag_classes;} else {$main_tag_class = 'main-tag';} ?>
 <main id="main" class="<?php echo esc_attr( $main_tag_class ); ?>" itemprop="mainContentOfPage" itemscope itemtype="https://schema.org/WebPageElement">
 <?php
-$_404_page_title = get_theme_mod( '404_page_title', '' );
+$_404_page_title = get_theme_mod( 'bootcms_404_page_title', '' );
 if ( $_404_page_title ) : ?>
     <h2><?php echo esc_html( $_404_page_title ); ?></h2>
 <?php else : ?>
-	<h2 class="A404-title"><?php esc_html_e( 'Page Not Found (404 Error)', 'BootCMS' ); ?></h2>	
+	<h2 class="A404-title"><?php esc_html_e( 'Page Not Found (404 Error)', 'bootcms' ); ?></h2>	
 <?php endif;
-$html_404_page = get_theme_mod( 'html_404_page', '' );
+$html_404_page = get_theme_mod( 'bootcms_html_404_page', '' );
 if ( ! empty( $html_404_page ) ) : ?>
 	<div class="A404-content"><?php echo $html_404_page; ?></div>
 <?php else : ?>
 <div class="A404-content">
-<p class="A404-paragraph"><strong><?php esc_html_e( 'This is somewhat embarrassing, isn\'t it?', 'BootCMS' ); ?></strong></p>
-<p class="A404-paragraph"><strong><?php esc_html_e( 'It seems we can\'t find what you\'re looking for.', 'BootCMS' ); ?></strong></p>
+<p class="A404-paragraph"><strong><?php esc_html_e( 'This is somewhat embarrassing, isn\'t it?', 'bootcms' ); ?></strong></p>
+<p class="A404-paragraph"><strong><?php esc_html_e( 'It seems we can\'t find what you\'re looking for.', 'bootcms' ); ?></strong></p>
 </div>
 <?php endif; 
-$_404_page_image = get_theme_mod( '404_page_image', '' );
+$_404_page_image = get_theme_mod( 'bootcms_404_page_image', '' );
   if ($_404_page_image) : 	
 $_404_page_image_alt = get_post_meta( $_404_page_image, '_wp_attachment_image_alt', true ); 
 ?>

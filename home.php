@@ -2,9 +2,9 @@
 /** 
  * WordPress classic theme
  * home.php
- * @link https://github/...
+ * @link https://github.com/netbuddy-net/BootCMS
  * @package BootCMS
- * @since 2.0
+ * @since 2.1
  */
 
 get_header();
@@ -13,10 +13,10 @@ get_header();
 <div class="pages-main-section">
 <div class="section-wrapper">
 <?php
-  $main_tag_classes = get_theme_mod( 'main_tag_classes', '' );
+  $main_tag_classes = get_theme_mod( 'bootcms_main_tag_classes', '' );
   if ( $main_tag_classes ) { $main_tag_class = $main_tag_classes;} else {$main_tag_class = 'main-tag';} ?>
   <main id="main" class="<?php echo esc_attr( $main_tag_class ); ?>" itemprop="mainContentOfPage" itemscope itemtype="https://schema.org/WebPageElement">
-  <h2><?php echo esc_html( get_theme_mod( 'posts_home_title', 'Published Posts' ) ); ?></h2>
+  <h2><?php echo esc_html( get_theme_mod( 'bootcms_posts_home_title', 'Published Posts' ) ); ?></h2>
   <?php if ( have_posts() ) :
 	while ( have_posts() ) : the_post(); ?>
 	  <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -25,7 +25,7 @@ get_header();
 		</header>
 		<div>				
 		  <p class="entry-meta">
-		  <?php if ( get_theme_mod( 'published_date_post', true ) ) : ?>
+		  <?php if ( get_theme_mod( 'bootcms_published_date_post', true ) ) : ?>
 			<span class="posted-on">
 			  <?php printf(
 				'<span id="published-title-' . get_the_ID() . '">%s</span> <a href="%s">%s</a>',
@@ -39,7 +39,7 @@ get_header();
 			  ); ?>
 			</span>
 		  <?php endif; ?>
-		  <?php if ( get_theme_mod( 'modified_date_post', false ) ) : ?>
+		  <?php if ( get_theme_mod( 'bootcms_modified_date_post', false ) ) : ?>
 			<span class="modified-on">
 			  <?php printf(
 				'<span id="modified-title-' . get_the_ID() . '">%s</span> %s',
@@ -48,7 +48,7 @@ get_header();
 			  ); ?>
 			</span>
 		  <?php endif; ?>
-		  <?php if ( get_theme_mod( 'author_of_post', true ) ) : ?>
+		  <?php if ( get_theme_mod( 'bootcms_author_of_post', true ) ) : ?>
 			<span class="posted-by">
 			  <span id="author-title-<?php the_ID(); ?>"><?php esc_html_e( 'Author: ', 'bootcms' ); ?></span>
 			  <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>">
@@ -56,7 +56,7 @@ get_header();
 			  </a>
 			</span>
 		  <?php endif; ?>
-		  <?php if ( get_theme_mod( 'category_of_post', true ) ) : ?>
+		  <?php if ( get_theme_mod( 'bootcms_category_of_post', true ) ) : ?>
 			<span class="posted-in">
 			  <?php printf(
 				'<span id="category-title-' . get_the_ID() . '">%s</span> %s',
@@ -65,7 +65,7 @@ get_header();
 			  ); ?>
 			</span>
 		  <?php endif; ?>
-		  <?php if ( get_theme_mod( 'post_tags', false ) ) : ?>
+		  <?php if ( get_theme_mod( 'bootcms_post_tags', false ) ) : ?>
 			<span class="posted-tags">
 			  <?php printf(
 				'<span id="tags-title-' . get_the_ID() . '">%s</span> %s',
@@ -74,7 +74,7 @@ get_header();
 			  ); ?>
 			</span>
 		  <?php endif; ?>
-		  <?php if ( get_theme_mod( 'comments_count', false ) ) : ?>
+		  <?php if ( get_theme_mod( 'bootcms_comments_count', false ) ) : ?>
 			<span class="comments-count">
 			  <?php printf(
 				'<span id="comments-title-' . get_the_ID() . '">%s</span> <a href="%s">%s</a>',
@@ -84,7 +84,7 @@ get_header();
 			  ); ?>
 			</span>
 		  <?php endif; ?>
-		  <?php if ( get_theme_mod( 'discussion_status', false ) ) : ?>
+		  <?php if ( get_theme_mod( 'bootcms_discussion_status', false ) ) : ?>
 			<span class="discussion-status">
 			  <span id="discussion-title-<?php the_ID(); ?>"><?php esc_html_e( 'Discussion: ', 'bootcms' ); ?></span>
 			  <?php if ( comments_open() ) : ?>
@@ -97,7 +97,7 @@ get_header();
 		  </p>
 		</div>				
 		<div class="entry-content">
-		  <?php if ( get_theme_mod( 'post_content_display', 'excerpt' ) === 'full' ) : ?>
+		  <?php if ( get_theme_mod( 'bootcms_post_content_display', 'excerpt' ) === 'full' ) : ?>
 		  <?php the_content(); ?>
 		  <?php else : ?>
 		  <?php the_excerpt(); ?>
@@ -107,7 +107,7 @@ get_header();
 	<?php endwhile; ?>
 	<div id="call2action">
 	<?php
-	  $cta_html = get_theme_mod( 'post_cta_html', '' );
+	  $cta_html = get_theme_mod( 'bootcms_post_cta_html', '' );
 	  if ( ! empty( $cta_html ) ) : ?>
 	  <hr id="cta-hr">	  
 	<?php	echo $cta_html; 

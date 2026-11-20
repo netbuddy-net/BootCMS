@@ -2,26 +2,14 @@
 /**
  * WordPress classic theme
  * bootcms-help/help.php 
- * @link https://github/...
+ * @link https://github.com/netbuddy-net/BootCMS
  * @package bootcms
- * @since bootcms 2.0
+ * @since bootcms 2.1
  */
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly 
 /* ========================================================
    Help Documents for Customizer
    ========================================================= */  
-/*
-Getting Started
-Theme & Appearance
-Simple Styles
-Header & Logo
-Navigation & Menus
-Frameworks
-Widgets
-Custom HTML
-Additional CSS
-Troubleshooting
-*/
 // Create the section
 function help_docs_customize_register( $wp_customize ) {
   $wp_customize->add_section( 'help_documents', array(
@@ -121,6 +109,19 @@ function help_docs_customize_register( $wp_customize ) {
         esc_html__( 'Post Settings', 'bootcms' ) .
         '</a>',
   ) );
+  $wp_customize->add_setting( 'header_body_image_help', array(
+	'default'           => '',
+	'sanitize_callback' => 'esc_url_raw',
+  ) );
+  $wp_customize->add_control( 'header_body_image_help', array(
+    'type'        => 'hidden',
+    'section'     => 'help_documents',
+    'description' => '<a href="' .
+        esc_url( get_template_directory_uri() . '/bootcms-help/header-body-image.html' ) .
+        '" class="help-links" target="_blank">' .
+        esc_html__( 'Header & Body B. Image', 'bootcms' ) .
+        '</a>',
+  ) );
   $wp_customize->add_setting( 'the_menus_help', array(
 	'default'           => '',
 	'sanitize_callback' => 'esc_url_raw',
@@ -173,6 +174,32 @@ function help_docs_customize_register( $wp_customize ) {
         esc_html__( 'Additional CSS', 'bootcms' ) .
         '</a>',
   ) ); 
+  $wp_customize->add_setting( 'edit_javascript_help', array(
+	'default'           => '',
+	'sanitize_callback' => 'esc_url_raw',
+  ) );
+  $wp_customize->add_control( 'edit_javascript_help', array(
+    'type'        => 'hidden',
+    'section'     => 'help_documents',
+    'description' => '<a href="' .
+        esc_url( get_template_directory_uri() . '/bootcms-help/edit-javascript.html' ) .
+        '" class="help-links" target="_blank">' .
+        esc_html__( 'Edit JavaScript', 'bootcms' ) .
+        '</a>',
+  ) );
+  $wp_customize->add_setting( 'lorem_ipsum_help', array(
+	'default'           => '',
+	'sanitize_callback' => 'esc_url_raw',
+  ) );
+  $wp_customize->add_control( 'lorem_ipsum_help', array(
+    'type'        => 'hidden',
+    'section'     => 'help_documents',
+    'description' => '<a href="' .
+        esc_url( get_template_directory_uri() . '/bootcms-help/lorem-ipsum.html' ) .
+        '" class="help-links" target="_blank">' .
+        esc_html__( 'Lorem ipsum', 'bootcms' ) .
+        '</a>',
+  ) );   
   $wp_customize->add_setting( 'large_editor_help', array(
 	'default'           => '',
 	'sanitize_callback' => 'esc_url_raw',
@@ -183,7 +210,20 @@ function help_docs_customize_register( $wp_customize ) {
     'description' => '<a href="' .
         esc_url( get_template_directory_uri() . '/bootcms-help/large-html-editor.html' ) .
         '" class="help-links" target="_blank">' .
-        esc_html__( 'Large HTML Editor', 'bootcms' ) .
+        esc_html__( 'BootCMS Large Editor', 'bootcms' ) .
+        '</a>',
+  ) ); 
+  $wp_customize->add_setting( 'bootcms_framework_help', array(
+	'default'           => '',
+	'sanitize_callback' => 'esc_url_raw',
+  ) );
+  $wp_customize->add_control( 'bootcms_framework_help', array(
+    'type'        => 'hidden',
+    'section'     => 'help_documents',
+    'description' => '<a href="' .
+        esc_url( get_template_directory_uri() . '/bootcms-help/framework.html' ) .
+        '" class="help-links" target="_blank">' .
+        esc_html__( 'BootCMS Framework', 'bootcms' ) .
         '</a>',
   ) );  
 }

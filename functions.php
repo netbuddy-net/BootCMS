@@ -2,9 +2,9 @@
 /** 
  * WordPress classic theme
  * functions.php
- * @link https://github/...
+ * @link https://github.com/netbuddy-net/BootCMS
  * @package BootCMS
- * @since 2.0
+ * @since 2.1
  */
  
 /* Disable the block widget editor (fixes errors) */
@@ -17,6 +17,54 @@ function bootcms_setup() {
   add_theme_support( 'title-tag' );
   // Add feed links
   add_theme_support( 'automatic-feed-links' );
+  // Add WP thumbnails support
+  add_theme_support( 'post-thumbnails' );
+// Add WP header's image  
+  add_theme_support( 'custom-header', array(
+    'width'        => 400,
+    'height'       => 300,
+    'flex-width'   => true,
+    'flex-height'  => true,
+    'header-text'  => true,
+    'uploads'      => true,
+  ) ); 
+  // Add WP custom background
+  add_theme_support( 'custom-background', array(
+    'default-image'          => '',
+    'default-preset'         => 'default',
+    'default-position-x'     => 'left',
+    'default-position-y'     => 'top',
+    'default-size'           => 'auto',
+    'default-repeat'         => 'repeat',
+    'default-attachment'     => 'scroll',
+    'default-color'          => '',
+    'wp-head-callback'       => '_custom_background_cb',
+    'admin-head-callback'    => '',
+    'admin-preview-callback' => '',
+  ) );
+  // Add WP logo support
+  add_theme_support( 'custom-logo', array(
+    'height'               => 250,
+    'width'                => 250,
+    'flex-height'          => true,
+    'flex-width'           => true,
+    'header-text'          => array( 'site-title', 'site-description' ),
+    'unlink-homepage-logo' => true,
+  ) );
+  // Add HTML5 as default
+  add_theme_support( 'html5', array(
+    'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'style', 'script',
+  ) );
+  // Add responsiveness for embedded content, such as YouTube and Vimeo.
+  add_theme_support( 'responsive-embeds' );
+  // Enable the Wide Width and Full Width alignment options in block editor
+  add_theme_support( 'align-wide' ); 
+  // Add support for WP frontend styling for blocks - not used
+     /* add_theme_support( 'wp-block-styles' ); */
+  // Rename WP Background Image section
+  function bootcms_rename_background_section( $wp_customize ) {
+    $wp_customize->get_section( 'background_image' )->title = __( 'Body Background Image', 'bootcms' ); }
+  add_action( 'customize_register', 'bootcms_rename_background_section', 20 );  
   // Enable main navigation menu
   register_nav_menus( array(
 	'primary' => __( 'Primary Navigation', 'bootcms' ),
@@ -52,14 +100,17 @@ function bootcms_enqueue_js_scripts() {
 	wp_enqueue_script( 'jquery',);
 	$bootcms_js_dependencies[] = 'jquery';
   }
+  if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+  wp_enqueue_script( 'comment-reply' );
+  }
   if ( get_theme_mod( 'bootcms_enable_react', false ) ) {
 	wp_enqueue_script( 'wp-element' );
     wp_enqueue_script(
-	  'frontend-react-app',
+	  'bootcms-frontend-react-app',
 	  get_template_directory_uri() . '/js/react-app.js',
 	  array( 'wp-element' ), null, true
     );
-    $bootcms_js_dependencies[] = 'frontend-react-app';	
+    $bootcms_js_dependencies[] = 'bootcms-frontend-react-app';	
   }  
   if ( get_theme_mod( 'bootcms_enable_vue', false ) ) {
     wp_enqueue_script(
@@ -68,11 +119,11 @@ function bootcms_enqueue_js_scripts() {
 	  array(), null, true
     );
     wp_enqueue_script(
-	  'frontend-vue-app',
+	  'bootcms-frontend-vue-app',
 	  get_template_directory_uri() . '/js/vue-app.js',
 	  array( 'bootcms-vue' ), null, true
     );
-	$bootcms_js_dependencies[] = 'frontend-vue-app';
+	$bootcms_js_dependencies[] = 'bootcms-frontend-vue-app';
   }
   wp_enqueue_script(
     'bootcms-template',
@@ -87,19 +138,24 @@ function bootcms_enqueue_js_scripts() {
   if ( $bootcms_css_framework === 'bootcms' ) {
 	wp_enqueue_style(
 	  'bootcms-bootcms',
-	  get_template_directory_uri() . '/frameworks/bootcms/2.0/bootcms.css',
+	  get_template_directory_uri() . '/frameworks/bootcms/2.1/bootcms.min.css',
 	  array(),
-	  '2.0'
-  ); }
+	  '2.1'
+  ); 
+	wp_enqueue_script(
+	  'bootcms-bootstrap',
+	  get_template_directory_uri() . '/frameworks/bootcms/2.1/bootcms.min.js',
+	  $bootcms_js_dependencies, '2.1', true
+    );}
 // Bootstrap 
   if ( $bootcms_css_framework === 'bootstrap' ) {
     $bootstrap_version = get_theme_mod( 'bootcms_bootstrap_version', '5.3.8' );
     wp_enqueue_style(
 	  'bootcms-bootstrap',
 	  get_template_directory_uri() . '/frameworks/bootstrap/' . $bootstrap_version . '/bootstrap.min.css',
-	  array(), $bootstrap_version );	  
+	  array(), $bootstrap_version );  
     // Bootstrap 5.3.8 RTL
-    if ( $bootstrap_version === '5.3.8' ) {
+    if ( $bootstrap_version === '5.3.8' && is_rtl() ) {
 	  wp_enqueue_style(
 		'bootcms-bootstrap-rtl',
 		get_template_directory_uri() . '/frameworks/bootstrap/5.3.8/bootstrap.rtl.min.css',
@@ -171,12 +227,13 @@ function bootcms_enqueue_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'bootcms_enqueue_styles' );
 
+  require_once get_template_directory() . '/inc/bootcms-editor.php';
 /*  -----------------------
  * Enable Widgets
  */
 function bootcms_widgets_init() {
   register_sidebar( array(
-	'name'          => __( 'Custom Header Sidebar', 'bootcms' ),
+	'name'          => __( 'Custom Header', 'bootcms' ),
 	'id'            => 'header-custom',
 	'description'   => __( 'Fully Custom Header.', 'bootcms' ),
 	'before_widget' => '',
@@ -230,7 +287,7 @@ function bootcms_widgets_init() {
 	'after_title'   => '</h2>'
   ) );
   register_sidebar( array(
-	'name'          => __( 'Custom Footer Sidebar', 'bootcms' ),
+	'name'          => __( 'Custom Footer', 'bootcms' ),
 	'id'            => 'footer-custom',
 	'description'   => __( 'Fully Custom Footer.', 'bootcms' ),
 	'before_widget' => '',
@@ -257,7 +314,7 @@ function bootcms_widgets_init() {
 	'after_title'   => '</h2>'
   ) );   
   register_sidebar( array(
-	'name'          => __( 'Footer Sidebar', 'bootcms' ),
+	'name'          => __( 'Footer Right', 'bootcms' ),
 	'id'            => 'footer-sidebar',
 	'description'   => __( 'Optional widget area on the right side of the footer.', 'bootcms' ),
 	'before_widget' => '',
@@ -273,17 +330,16 @@ add_action( 'after_setup_theme', function() {
 	require_once get_template_directory() . '/inc/back-end.php';
  }
 } );
-/* Link to large HTML editor and Help ------------------ */
-	require_once get_template_directory() . '/inc/bootcms-editor.php';
+/* Link to Help ------------------ */
 	require_once get_template_directory() . '/bootcms-help/help.php';
 // Apply the Excerpt Length from Customizer to WP
 add_filter( 'excerpt_length', function( $length ) {
-  $excerpt_length = get_theme_mod( 'post_excerpt_length', 55 );
+  $excerpt_length = get_theme_mod( 'bootcms_post_excerpt_length', 55 );
   if ( $excerpt_length < 1 ) { $excerpt_length = 55; }
   return $excerpt_length;
 } );
 /* BootCMS JS Script for Navbar Toggle */
-function mytheme_mobile_nav_script() {
+function bootcms_mobile_nav_script() {
 ?>
 <script>
   const navbar = document.querySelector('.bootcms-navbar');
@@ -311,7 +367,7 @@ function mytheme_mobile_nav_script() {
 </script>
 <?php
 }
-add_action( 'wp_footer', 'mytheme_mobile_nav_script' );
+add_action( 'wp_footer', 'bootcms_mobile_nav_script' );
 
 /* Display Custom fields section on theme activation */
 function bootcms_enable_custom_fields() {
@@ -341,6 +397,8 @@ add_action( 'save_post_page', 'bootcms_add_page_fields', 10, 3 );
  * Disable WordPress Block Editor and block styles.
  */
 if ( get_theme_mod( 'bootcms_disable_block_editor', false ) ) {
+// Disable the Block Editor in the back end
+	add_filter( 'use_block_editor_for_post', '__return_false' );
 // Remove global styles and block layouts from the front end
 function bootcms_disable_global_styles() {
     remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
@@ -356,6 +414,12 @@ function bootcms_dequeue_block_styles() {
 }
 add_action('wp_enqueue_scripts', 'bootcms_dequeue_block_styles', 100);
 }
+// Remove WordPress background colour control in customizer
+function bootcms_remove_background_color_control( $wp_customize ) {
+    $wp_customize->remove_control( 'background_color' );
+    $wp_customize->remove_section( 'colors' );
+}
+add_action( 'customize_register', 'bootcms_remove_background_color_control', 11 );
 /*
 // Prevent WordPress from rendering separate inline styles for core blocks
 add_filter( 'should_load_separate_core_block_assets', '__return_false', 99 );
@@ -378,14 +442,14 @@ if ( get_theme_mod( 'bootcms_disable_emojis', false ) ) {
    Frameworks
    ========================================================= */
 
-$franework_menu_option = get_theme_mod( 'bootcms_css_framework', 'bootcms' );
+$bootcms_franework_menu_option = get_theme_mod( 'bootcms_css_framework', 'bootcms' );
 /*
  * Bootstrap Menu Filters 
  */
-if ($franework_menu_option === 'bootstrap' || $franework_menu_option === 'bootswatch') {
+if ($bootcms_franework_menu_option === 'bootstrap' || $bootcms_franework_menu_option === 'bootswatch') {
 // 1. Add '.nav-item' to the <li> tags, and '.dropdown' if it has children
-add_filter( 'nav_menu_css_class', 'bootstrap5_menu_li_classes', 10, 4 );
-function bootstrap5_menu_li_classes( $classes, $item, $args, $depth ) {
+add_filter( 'nav_menu_css_class', 'bootcms_bootstrap5_menu_li_classes', 10, 4 );
+function bootcms_bootstrap5_menu_li_classes( $classes, $item, $args, $depth ) {
     if ( isset( $args->theme_location ) && $args->theme_location === 'primary' ) {
         $classes[] = 'nav-item';
         if ( in_array( 'menu-item-has-children', $classes ) ) {
@@ -395,8 +459,8 @@ function bootstrap5_menu_li_classes( $classes, $item, $args, $depth ) {
     return $classes;
 }
 // 2. Add '.nav-link' or '.dropdown-toggle' attributes to the <a> tags
-add_filter( 'nav_menu_link_attributes', 'bootstrap5_menu_anchor_attributes', 10, 4 );
-function bootstrap5_menu_anchor_attributes( $atts, $item, $args, $depth ) {
+add_filter( 'nav_menu_link_attributes', 'bootcms_bootstrap5_menu_anchor_attributes', 10, 4 );
+function bootcms_bootstrap5_menu_anchor_attributes( $atts, $item, $args, $depth ) {
     if ( isset( $args->theme_location ) && $args->theme_location === 'primary' ) {
         $atts['class'] = 'nav-link';        
         // If it's a dropdown toggle item
@@ -413,12 +477,12 @@ function bootstrap5_menu_anchor_attributes( $atts, $item, $args, $depth ) {
     return $atts;
 }
 // 3. Change the default '.sub-menu' class to Bootstrap's '.dropdown-menu'
-add_filter( 'nav_menu_submenu_css_class', 'bootstrap5_menu_sub_menu_class', 10, 3 );
-function bootstrap5_menu_sub_menu_class( $classes, $args, $depth ) {
+add_filter( 'nav_menu_submenu_css_class', 'bootcms_bootstrap5_menu_sub_menu_class', 10, 3 );
+function bootcms_bootstrap5_menu_sub_menu_class( $classes, $args, $depth ) {
     if ( isset( $args->theme_location ) && $args->theme_location === 'primary' ) {
         $classes = array( 'dropdown-menu' );
-		$use_navtag_classes = get_theme_mod( 'nav_tag_classes', '' );
-        if ( preg_match( '/(?:^|\s)(bg-[\w-]+)/', $use_navtag_classes, $match ) ) {
+		$bootcms_use_navtag_classes = get_theme_mod( 'bootcms_nav_tag_classes', '' );
+        if ( preg_match( '/(?:^|\s)(bg-[\w-]+)/', $bootcms_use_navtag_classes, $match ) ) {
             $classes[] = $match[1];
         }
     }
@@ -428,7 +492,7 @@ function bootstrap5_menu_sub_menu_class( $classes, $args, $depth ) {
 /*
  * Foundation Menu Filters 
  */
-if ($franework_menu_option === 'foundation') {
+if ($bootcms_franework_menu_option === 'foundation') {
 // 1. Add the site name at start
 add_filter( 'wp_nav_menu_items', 'bootcms_foundation_menu_item', 10, 2 );
 function bootcms_foundation_menu_item( $items, $args ) {
@@ -438,8 +502,8 @@ function bootcms_foundation_menu_item( $items, $args ) {
   return $items;
 }
 // 2. Add 'is-dropdown-submenu-parent' to the <li> tags if they have children
-add_filter( 'nav_menu_css_class', 'foundation6_menu_li_classes', 10, 4 );
-function foundation6_menu_li_classes( $classes, $item, $args, $depth ) {
+add_filter( 'nav_menu_css_class', 'bootcms_foundation6_menu_li_classes', 10, 4 );
+function bootcms_foundation6_menu_li_classes( $classes, $item, $args, $depth ) {
     if ( isset( $args->theme_location ) && $args->theme_location === 'primary' ) {
         // If the item has a submenu, Foundation requires a specific parent indicator
         if ( in_array( 'menu-item-has-children', $classes ) ) {
@@ -453,8 +517,8 @@ function foundation6_menu_li_classes( $classes, $item, $args, $depth ) {
     return $classes;
 }
 // 3. Format the <a> tags (add active state if needed)
-add_filter( 'nav_menu_link_attributes', 'foundation6_menu_anchor_attributes', 10, 4 );
-function foundation6_menu_anchor_attributes( $atts, $item, $args, $depth ) {
+add_filter( 'nav_menu_link_attributes', 'bootcms_foundation6_menu_anchor_attributes', 10, 4 );
+function bootcms_foundation6_menu_anchor_attributes( $atts, $item, $args, $depth ) {
     if ( isset( $args->theme_location ) && $args->theme_location === 'primary' ) {
         // Add Foundation active styling for the current page link
         if ( in_array( 'current-menu-item', $item->classes ) ) {
@@ -464,8 +528,8 @@ function foundation6_menu_anchor_attributes( $atts, $item, $args, $depth ) {
     return $atts;
 }
 // 4. Change the sub-menu <ul> class to Foundation's format
-add_filter( 'nav_menu_submenu_css_class', 'foundation6_menu_sub_menu_class', 10, 3 );
-function foundation6_menu_sub_menu_class( $classes, $args, $depth ) {
+add_filter( 'nav_menu_submenu_css_class', 'bootcms_foundation6_menu_sub_menu_class', 10, 3 );
+function bootcms_foundation6_menu_sub_menu_class( $classes, $args, $depth ) {
     if ( isset( $args->theme_location ) && $args->theme_location === 'primary' ) {
         // Foundation expects nested sub-menus to have 'menu vertical submenu'
         $classes = array( 'menu', 'vertical', 'submenu', 'is-accordion-submenu' );
@@ -476,7 +540,7 @@ function foundation6_menu_sub_menu_class( $classes, $args, $depth ) {
 /*
  * Bulma Menu Nav Walker 
  */
-if ($franework_menu_option === 'bulma') { 
+if ($bootcms_franework_menu_option === 'bulma') { 
   class BootCMS_Bulma_Walker extends Walker_Nav_Menu {
 	/* Start the top-level menu */
 	public function start_lvl( &$output, $depth = 0, $args = null ) {
@@ -550,26 +614,38 @@ if ($franework_menu_option === 'bulma') {
 }
 
 /* =========================================================
-   Shortcodes
+   Frontend Styles for Gutenberg editor
    ========================================================= */
-
-// Search form : [bootcms_search] 
-function bootcms_search_form() {
-  ob_start(); ?>
-  <form id="form-bootcms-search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-	<input
-	  type="search"
-	  id="bootcms-search"
-	  name="s"
-	  value="<?php echo esc_attr( get_search_query() ); ?>" >
-	<button type="submit">
-	  <?php esc_html_e( 'Search', 'bootcms' ); ?>
-	</button>
-  </form>
-<?php
-  return ob_get_clean();
+function bootcms_editor_styles() {
+  add_theme_support( 'editor-styles' );
+  $bootcms_css_framework = get_theme_mod( 'bootcms_css_framework', 'bootcms' );
+	
+  if ( $bootcms_css_framework === 'bootcms' ) {
+	add_editor_style(
+	  'frameworks/bootcms/2.0/bootcms.css'
+  );}
+  if ( $bootcms_css_framework === 'bootstrap' ) {
+	$bootstrap_version = get_theme_mod( 'bootcms_bootstrap_version', '5.3.8' );
+	add_editor_style(
+	  'frameworks/bootstrap/' . $bootstrap_version . '/bootstrap.min.css'
+  );
+  if ( $bootstrap_version === '5.3.8' && is_rtl() ) {
+	add_editor_style(
+	  'frameworks/bootstrap/5.3.8/bootstrap.rtl.min.css'
+  ); } }
+  if ( $bootcms_css_framework === 'foundation' ) {
+	$foundation_version = get_theme_mod( 'bootcms_foundation_version', '6.9.0' );
+	add_editor_style(
+	  'frameworks/foundation/' . $foundation_version . '/foundation.min.css'
+  ); }
+  if ( $bootcms_css_framework === 'bulma' ) {
+	add_editor_style(
+	  'frameworks/bulma/1.0.4/bulma.min.css'
+  ); }
 }
-add_shortcode( 'bootcms_search', 'bootcms_search_form' );
+add_action( 'after_setup_theme', 'bootcms_editor_styles' );
+
+
 
 /* =========================================================
    BootCMS Simple Styles - Dynamic CSS
@@ -577,7 +653,7 @@ add_shortcode( 'bootcms_search', 'bootcms_search_form' );
 
 /* Calculate the header image ratio */
 function bootcms_header_image_ratio() {
-  $header_image_id = get_theme_mod( 'header_image', '' );
+  $header_image_id = get_theme_mod( 'bootcms_header_image', '' );
   $hdimg_ratio = 0;
   if ( $header_image_id ) {
 	$hdimg_metadata = wp_get_attachment_metadata( $header_image_id );
@@ -615,40 +691,40 @@ function bootcms_simple_styles_css() {
 if ( get_theme_mod( 'bootcms_css_framework', 'bootcms' ) !== 'bootcms' ) {
 		return;
 	}		
-  $header_text_color       = get_theme_mod( 'header_text_color', '' );
-  $header_background_color = get_theme_mod( 'header_background_color', '' );
+  $header_text_color       = get_theme_mod( 'bootcms_header_text_color', '' );
+  $header_background_color = get_theme_mod( 'bootcms_header_background_color', '' );
 
-  $header_image            = get_theme_mod( 'header_image', '' );
-  $header_image_background = get_theme_mod( 'header_image_background', false );
+  $header_image            = get_theme_mod( 'bootcms_header_image', '' );
+  $header_image_background = get_theme_mod( 'bootcms_header_image_background', false );
   $header_title_position   = get_theme_mod( 'bootcms_title_tagline_position', 'bootcms-title-left' );  
 
-  $bootcms_logo            = get_theme_mod( 'bootcms_logo', '' );
+  $bootcms_logo            = get_theme_mod( 'custom_logo', '' );
   $bootcms_logo_image      = get_theme_mod( 'bootcms_logo_image', false );
   $footer_logo_image       = get_theme_mod( 'footer_logo_image', false );  
    
-  $navbar_text_color           = get_theme_mod( 'navbar_text_color', '' );
-  $navbar_background_color     = get_theme_mod( 'navbar_background_color', '' );
-  $navbar_position_choice      = get_theme_mod( 'navbar_position_choice', '' ); 
-  $navbar_horizontal_position  = get_theme_mod( 'navbar_horizontal_position', 'bootcms-navbar-left' );
+  $navbar_text_color           = get_theme_mod( 'bootcms_navbar_text_color', '' );
+  $navbar_background_color     = get_theme_mod( 'bootcms_navbar_background_color', '' );
+  $navbar_position_choice      = get_theme_mod( 'bootcms_navbar_position_choice', '' ); 
+  $navbar_horizontal_position  = get_theme_mod( 'bootcms_navbar_horizontal_position', 'bootcms-navbar-left' );
   
-  $main_text_color           = get_theme_mod( 'main_text_color', '' );
-  $main_background_color     = get_theme_mod( 'main_background_color', '' );
-  $main_background_image     = get_theme_mod( 'main_background_image', '' ); 
-  $main_background_watermark = get_theme_mod( 'main_background_watermark', false );
+  $main_text_color           = get_theme_mod( 'bootcms_main_text_color', '' );
+  $main_background_color     = get_theme_mod( 'bootcms_main_background_color', '' );
+  $main_background_image     = get_theme_mod( 'bootcms_main_background_image', '' ); 
+  $main_background_watermark = get_theme_mod( 'bootcms_main_background_watermark', false );
   
-  $aside_text_color       = get_theme_mod( 'aside_text_color', '' );
-  $aside_background_color = get_theme_mod( 'aside_background_color', '' );
-  $right_sidebar_width    = get_theme_mod( 'right_sidebar_width', '' );  
+  $aside_text_color       = get_theme_mod( 'bootcms_aside_text_color', '' );
+  $aside_background_color = get_theme_mod( 'bootcms_aside_background_color', '' );
+  $right_sidebar_width    = get_theme_mod( 'bootcms_right_sidebar_width', '' );  
 
-  $footer_text_color       = get_theme_mod( 'footer_text_color', '' );
-  $footer_background_color = get_theme_mod( 'footer_background_color', '' );
+  $footer_text_color       = get_theme_mod( 'bootcms_footer_text_color', '' );
+  $footer_background_color = get_theme_mod( 'bootcms_footer_background_color', '' );
 
-  $page_background_color     = get_theme_mod( 'page_background_color', '' );
-  $page_background_image     = get_theme_mod( 'page_background_image', '' ); 
-  $page_background_tiles     = get_theme_mod( 'page_background_tiles', false );
-  $background_tiles_position = get_theme_mod( 'background_tiles_position', 'top-left' );  
+  $page_background_color     = get_theme_mod( 'bootcms_page_background_color', '' );
+  $page_background_image     = get_theme_mod( 'bootcms_page_background_image', '' ); 
+  $page_background_tiles     = get_theme_mod( 'bootcms_page_background_tiles', false );
+  $background_tiles_position = get_theme_mod( 'bootcms_background_tiles_position', 'top-left' );  
   
-  $main_background_watermark = get_theme_mod( 'main_background_watermark', false );
+  $main_background_watermark = get_theme_mod( 'bootcms_main_background_watermark', false );
   if ( $main_background_watermark && $main_background_image ) {
     $wrmark_metadata = wp_get_attachment_metadata( $main_background_image );
     if ( $wrmark_metadata && ! empty( $wrmark_metadata['width'] ) && ! empty( $wrmark_metadata['height'] ) ) {
@@ -665,7 +741,7 @@ if ( get_theme_mod( 'bootcms_css_framework', 'bootcms' ) !== 'bootcms' ) {
 <style id="bootcms-simple-styles">
   <?php if (! $header_image_background ) :
   $sq_image_ratio = bootcms_header_image_ratio();  
-  $hdr_image_sq = get_theme_mod( 'header_image', '' );
+  $hdr_image_sq = get_theme_mod( 'bootcms_header_image', '' );
   if ( $hdr_image_sq ) {
 	$hdrsq_width = 0;	  
   	$hdrsq_metadata = wp_get_attachment_metadata( $hdr_image_sq );

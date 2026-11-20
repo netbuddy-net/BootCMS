@@ -2,9 +2,9 @@
 /** 
  * WordPress classic theme
  * archive.php
- * @link https://github/...
+ * @link https://github.com/netbuddy-net/BootCMS
  * @package BootCMS
- * @since 2.0
+ * @since 2.1
  */
 
 get_header();
@@ -13,7 +13,7 @@ get_header();
 <div class="pages-main-section">
 <div class="section-wrapper">
 <?php
-  $main_tag_classes = get_theme_mod( 'main_tag_classes', '' );
+  $main_tag_classes = get_theme_mod( 'bootcms_main_tag_classes', '' );
   if ( $main_tag_classes ) { $main_tag_class = $main_tag_classes;} else {$main_tag_class = 'main-tag';} ?>
   <main id="main" class="<?php echo esc_attr( $main_tag_class ); ?>" itemprop="mainContentOfPage" itemscope itemtype="https://schema.org/WebPageElement">
   <h2 id="archive-title"><?php the_archive_title(); ?></h2>
@@ -25,7 +25,7 @@ get_header();
 		</header>
 		<div>				
 	<p class="entry-meta">
-		  <?php if ( ! is_date() && get_theme_mod( 'published_date_post', true ) ) : ?>
+		  <?php if ( ! is_date() && get_theme_mod( 'bootcms_published_date_post', true ) ) : ?>
 			<span class="posted-on">
 			  <?php printf(
 				'<span id="published-title">%s</span> <a href="%s">%s</a>',
@@ -39,7 +39,7 @@ get_header();
 			  ); ?>
 			</span>
 		  <?php endif; 
-		  if ( get_theme_mod( 'modified_date_post', false ) ) : ?>
+		  if ( get_theme_mod( 'bootcms_modified_date_post', false ) ) : ?>
 			<span class="modified-on">
 			  <?php printf(
 				'<span id="modified-title">%s</span> %s',
@@ -48,7 +48,7 @@ get_header();
 			  ); ?>
 			</span>
 		  <?php endif; 
-		  if ( ! is_author() && get_theme_mod( 'author_of_post', true ) ) : ?>
+		  if ( ! is_author() && get_theme_mod( 'bootcms_author_of_post', true ) ) : ?>
 			<span class="posted-by">
 			  <span id="author-title"><?php esc_html_e( 'Author: ', 'bootcms' ); ?></span>
 			  <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>">
@@ -58,7 +58,7 @@ get_header();
 		  <?php endif;
 		  $category_archive = false;
 		  if ( is_category() ) { $category_archive = get_queried_object_id(); }
-		  if ( get_theme_mod( 'category_of_post', true ) ) :
+		  if ( get_theme_mod( 'bootcms_category_of_post', true ) ) :
 			$categories = get_the_category();
 			if ( $categories ) :
 			  $category_links = array();
@@ -80,7 +80,7 @@ get_header();
 		  endif;
 		  $tag_archive = false;
 		  if ( is_tag() ) { $tag_archive = get_queried_object_id(); }
-		  if ( get_theme_mod( 'post_tags', false ) ) :
+		  if ( get_theme_mod( 'bootcms_post_tags', false ) ) :
 			$tags = get_the_tags();
 			if ( $tags ) :
 			  $tag_links = array();
@@ -100,7 +100,7 @@ get_header();
 			  endif;
 			endif;
 		  endif; 
-		  if ( get_theme_mod( 'comments_count', false ) ) : ?>
+		  if ( get_theme_mod( 'bootcms_comments_count', false ) ) : ?>
 			<span class="comments-count">
 			  <?php printf(
 				'<span id="comments-title">%s</span> <a href="%s">%s</a>',
@@ -110,7 +110,7 @@ get_header();
 			  ); ?>
 			</span>
 		  <?php endif; 
-		  if ( get_theme_mod( 'discussion_status', false ) ) : ?>
+		  if ( get_theme_mod( 'bootcms_discussion_status', false ) ) : ?>
 			<span class="discussion-status">
 			  <span id="discussion-title"><?php esc_html_e( 'Discussion: ', 'bootcms' ); ?></span>
 			  <?php if ( comments_open() ) : ?>
@@ -121,7 +121,12 @@ get_header();
 			</span>
 		  <?php endif; ?>
 		</p>
-		</div>				
+		</div>
+		<?php if ( has_post_thumbnail() ) {
+		  echo '<figure class="post-thumbnail">';
+		  the_post_thumbnail( 'medium' );
+		  echo '</figure>';
+		} ?>		
 		<div class="entry-content">
 		  <?php the_excerpt(); ?>
 		</div>
@@ -129,7 +134,7 @@ get_header();
 	<?php endwhile; ?>
 	<div id="call2action">
 	<?php
-	  $cta_html = get_theme_mod( 'post_cta_html', '' );
+	  $cta_html = get_theme_mod( 'bootcms_post_cta_html', '' );
 	  if ( ! empty( $cta_html ) ) : ?>
 	  <hr id="cta-hr">	  
 	<?php	echo $cta_html; 
